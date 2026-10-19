@@ -47,6 +47,8 @@ After launch:
 
 The header, menu, reviews and footer are repeated in each page's HTML, so a change to one of them must be made in every page that has it. Per-page SEO (title, description, canonical, Open Graph, breadcrumb data) sits in each page's `<head>`. The FAQ structured data is only on `/faq/`.
 
+After changing `css/site.css` or `js/site.js`, raise the `?v=` number on their links in every page (for example `site.css?v=2` to `site.css?v=3`). Browsers then download the new file instead of using a cached copy.
+
 To swap a photo, replace the file in `assets/photos/` and keep the same name.
 
 ## Behavior notes
