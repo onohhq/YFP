@@ -1,0 +1,21 @@
+# Your Fave Photobooth
+
+> Premium photo booth rental company serving Maryland, Washington DC and Virginia. Weddings, corporate events, brand activations, birthdays and anniversaries.
+
+## Photo booths & pricing
+- Classic DSLR Photobooth, from $650, full day rental. Unlimited photos, live gallery, instant sharing, custom template design. Most popular.
+- Portrait Photobooth, from $1,050, 4 hour rental. Studio-quality session led by a live professional photographer; premium backdrop, stanchions & photo rug; digital gallery; unlimited prints. Guest favorite.
+
+## Why clients choose us
+- Thoughtful consultation, detailed planning, early arrival and seamless execution.
+- Custom backdrops, overlays and templates matched to your brand or wedding vision.
+- Hosts trained to guide guests; prints and digital photos delivered during the event.
+
+## Pages
+- Home: https://yourfavephotobooth.com/
+- Photo booths & pricing: https://yourfavephotobooth.com/photobooths/
+- Events: https://yourfavephotobooth.com/events/
+- Corporate & brand activations: https://yourfavephotobooth.com/corporate/
+- Weddings: https://yourfavephotobooth.com/weddings/
+- FAQ: https://yourfavephotobooth.com/faq/
+- Contact / booking: https://yourfavephotobooth.com/contact/

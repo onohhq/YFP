@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Disallow: /thankyou/
+Disallow: /dp/
+Disallow: /connect/
+Disallow: /connect2/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://yourfavephotobooth.com/sitemap.xml
