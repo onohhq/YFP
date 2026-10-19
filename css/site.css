@@ -65,10 +65,14 @@ html.lock, html.lock body { overflow: hidden; }
   margin: 0;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(40px, 5.5vw, 72px);
-  line-height: 1;
+  font-size: clamp(46px, 7vw, 96px);
+  line-height: .95;
   text-transform: uppercase;
+  text-wrap: balance;
 }
+/* One short line under a heading */
+.sec-sub { max-width: 560px; margin: 18px auto 0; }
+.split-sub { max-width: 480px; margin: 0 0 30px; }
 .h2 em { text-transform: none; }
 
 /* ---------- Buttons ---------- */
@@ -232,14 +236,14 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .hero h1 { margin: 0; }
 .hero-title {
   display: block; font-family: var(--serif); font-weight: 400;
-  font-size: clamp(46px, 7.4vw, 104px); line-height: .94; text-transform: uppercase;
+  font-size: clamp(52px, 8.6vw, 124px); line-height: .92; text-transform: uppercase;
 }
 .hero-sub {
   display: block; font-family: var(--serif); font-style: italic; font-weight: 400;
-  font-size: clamp(42px, 6.6vw, 94px); line-height: 1.05;
+  font-size: clamp(46px, 7.6vw, 110px); line-height: 1.02;
 }
 .hero--home .hero-title { text-wrap: balance; }
-.hero--home .hero-sub { font-size: clamp(40px, 6.4vw, 90px); }
+.hero--home .hero-sub { font-size: clamp(44px, 7.2vw, 104px); }
 .hero__content > p { margin: 22px 0 0; max-width: 600px; }
 .hero--home .hero__content > p { margin: 22px 0 30px; max-width: 420px; }
 .hero__note { font-size: 15px; font-weight: 400; letter-spacing: .3em; text-transform: uppercase; }
@@ -255,7 +259,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .hero--contact .hero__content > p { margin-top: 18px; }
 
 .hero--thanks h1 {
-  font-family: var(--serif); font-size: clamp(42px, 6.6vw, 92px); line-height: .95;
+  font-family: var(--serif); font-size: clamp(48px, 7.6vw, 108px); line-height: .92;
   text-transform: uppercase; text-wrap: balance;
 }
 .hero--thanks h1 em { text-transform: none; }
@@ -293,7 +297,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   gap: clamp(40px, 7vw, 90px); align-items: center;
 }
 .split .label { margin-bottom: 14px; }
-.split .h2 { margin-bottom: 30px; font-size: clamp(40px, 5vw, 68px); line-height: .95; }
+.split .h2 { margin-bottom: 22px; font-size: clamp(46px, 6.4vw, 88px); line-height: .92; }
 
 .collage { position: relative; padding: 0 12% 60px 0; }
 .collage--flip { padding: 0 0 60px 12%; }
@@ -308,14 +312,15 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   padding: 28px var(--gutter); text-align: center;
   background: var(--bg-2); border-bottom: 1px solid var(--line);
 }
-.strip p { max-width: 760px; margin: 0 auto; font-family: var(--serif); font-size: clamp(24px, 2.6vw, 32px); line-height: 1.3; }
+.strip p { max-width: 900px; margin: 0 auto; font-family: var(--serif); font-size: clamp(30px, 4vw, 52px); line-height: 1.1; text-transform: uppercase; }
+.strip p em { text-transform: none; }
 
 /* Numbered reasons list */
 .reasons { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
 .reasons li {
   display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 16px 0;
   border-bottom: 1px solid var(--line-2);
-  font-family: var(--serif); font-size: 21px; line-height: 1.3;
+  font-family: var(--serif); font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15;
 }
 .reasons li span:first-child { padding-top: 6px; font-family: var(--sans); font-size: 14px; letter-spacing: .2em; }
 
@@ -330,11 +335,11 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .statement__inner { position: relative; max-width: 860px; margin: 0 auto; text-align: center; }
 .statement__inner--wide { max-width: 880px; }
 .statement .script {
-  margin: 0 0 -6px min(0px, calc(40px - 20vw));
+  margin: 0 0 12px min(0px, calc(40px - 20vw));
   font-size: clamp(44px, 5vw, 64px); line-height: .9; transform: rotate(-6deg);
 }
 .statement h2 {
-  margin: 0; font-family: var(--serif); font-size: clamp(44px, 6.4vw, 88px); line-height: .96;
+  margin: 0; font-family: var(--serif); font-size: clamp(50px, 8vw, 116px); line-height: .92;
   text-transform: uppercase; text-wrap: balance;
 }
 .statement h2 em { text-transform: none; }
@@ -380,23 +385,21 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .ecard__img { overflow: hidden; aspect-ratio: 3 / 4; background: var(--line); }
 .ecard__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ecard__text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-.ecard__title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; text-transform: uppercase; }
+.ecard__title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 3.2vw, 44px); line-height: 1; text-transform: uppercase; }
 .ecard__cta {
   padding-bottom: 3px; border-bottom: 1px solid currentColor; white-space: nowrap;
   font-size: 14px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase;
 }
 .ecards--events .ecard__img { aspect-ratio: 4 / 5; }
-.ecards--events .ecard__title { font-size: 32px; }
 .ecard--other {
   justify-content: flex-end; gap: 14px; min-height: 320px; padding: 32px 26px;
   background: var(--navy); color: var(--bg);
 }
 .ecard--other .script { font-size: 46px; line-height: .9; }
-.ecard--other .ecard__title { font-size: 34px; }
+.ecard--other .ecard__title { font-size: clamp(36px, 3.4vw, 46px); }
 .ecard--other p { margin: 0; font-size: 19px; }
 .ecard--other .btn-row { gap: 10px; margin-top: 6px; }
 .ecards--events .ecard--other { min-height: 360px; }
-.ecards--events .ecard--other .ecard__title { font-size: 36px; }
 
 /* Booth showcase panels */
 .booths { background: var(--ink); }
@@ -421,11 +424,11 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .booth__the { font-family: var(--serif); font-size: 16px; letter-spacing: .3em; text-transform: uppercase; }
 .booth__name {
   display: block; margin: 4px 0; white-space: nowrap;
-  font-family: var(--serif); font-style: italic; font-size: clamp(42px, 4.4vw, 68px); line-height: 1.05;
+  font-family: var(--serif); font-style: italic; font-size: clamp(50px, 5.4vw, 80px); line-height: 1.02;
 }
 .booth__kind {
   display: block; margin-bottom: 22px;
-  font-family: var(--serif); font-size: clamp(36px, 4vw, 54px); line-height: 1.05;
+  font-family: var(--serif); font-size: clamp(42px, 4.8vw, 66px); line-height: 1;
   text-transform: uppercase; text-wrap: balance;
 }
 .booth__desc {
@@ -465,7 +468,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .offering__body { padding-top: 12px; }
 .offering__body > .label { margin-bottom: 16px; }
 .offering h2 {
-  margin: 0 0 20px; font-family: var(--serif); font-size: clamp(44px, 5.4vw, 72px); line-height: .95;
+  margin: 0 0 20px; font-family: var(--serif); font-size: clamp(50px, 6.6vw, 92px); line-height: .92;
   text-transform: uppercase;
 }
 .offering h2 em { text-transform: none; }
@@ -486,7 +489,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .faq { max-width: 1080px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 80px); align-items: flex-start; }
 .faq__intro { flex: 1 1 260px; max-width: 340px; }
 .faq__intro .label { margin-bottom: 14px; }
-.faq__intro .h2 { margin-bottom: 20px; font-size: clamp(40px, 5vw, 64px); line-height: .95; }
+.faq__intro .h2 { margin-bottom: 20px; font-size: clamp(46px, 6vw, 80px); }
 .faq__intro p { margin: 0 0 28px; }
 .faq__list { flex: 2 1 420px; min-width: 0; border-top: 1px solid var(--ink); }
 .faq__item { border-bottom: 1px solid var(--line-2); }
@@ -496,7 +499,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   padding: 22px 0; border: 0; background: none; color: var(--ink); text-align: left; cursor: pointer;
 }
 .faq__num { font-size: 14px; letter-spacing: .2em; }
-.faq__text { font-family: var(--serif); font-size: clamp(20px, 2vw, 25px); line-height: 1.2; text-transform: uppercase; }
+.faq__text { font-family: var(--serif); font-size: clamp(23px, 2.5vw, 32px); line-height: 1.1; text-transform: uppercase; }
 .faq__sign { font-family: var(--serif); font-size: 26px; line-height: 1; color: var(--navy); }
 .faq__a p {
   max-width: 680px; margin: 0; padding: 0 36px 26px 52px;
@@ -525,13 +528,13 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .reviews { padding: clamp(80px, 10vw, 130px) var(--gutter); background: var(--bg); border-top: 1px solid var(--line); }
 .reviews__inner { max-width: 900px; margin: 0 auto; text-align: center; }
 .reviews .label { margin-bottom: 10px; }
-.reviews .h2 { margin-bottom: 36px; font-size: clamp(36px, 4.6vw, 60px); }
+.reviews .h2 { margin-bottom: 36px; }
 .stars { margin-bottom: 22px; color: var(--navy); font-size: 14px; letter-spacing: .4em; }
 .review { margin: 0; }
 .review blockquote { margin: 0; }
 .review p {
   max-width: 780px; margin: 0 auto 26px;
-  font-family: var(--serif); font-size: clamp(22px, 2.4vw, 30px); line-height: 1.35; text-wrap: pretty;
+  font-family: var(--serif); font-size: clamp(26px, 3vw, 38px); line-height: 1.25; text-wrap: pretty;
 }
 .review figcaption { font-size: 15px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
 .dots { display: flex; justify-content: center; gap: 10px; margin: 28px 0 36px; }
