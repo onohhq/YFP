@@ -131,10 +131,13 @@ html.lock, html.lock body { overflow: hidden; }
 .header-logo img { display: block; height: 58px; width: auto; }
 .header-book {
   justify-self: end; display: inline-flex; white-space: nowrap;
-  padding: 11px 18px; border: 1px solid rgba(245, 246, 249, .7); color: var(--bg);
-  font-size: 14px; letter-spacing: .26em; text-transform: uppercase;
+  padding: 11px 18px; border: 1px solid #FFF; background: #FFF; color: var(--navy);
+  font-size: 14px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase;
 }
-.header-book:hover { background: var(--bg); color: var(--navy); }
+.header-book:hover { border-color: var(--navy); background: var(--navy); color: var(--bg); }
+@media (max-width: 759px) {
+  .header-book { padding: 8px 12px; font-size: 12px; letter-spacing: .16em; }
+}
 
 /* ---------- Menu overlay ---------- */
 html.menu-open, html.menu-open body { overflow: hidden; }
