@@ -53,7 +53,10 @@ To swap a photo, replace the file in `assets/photos/` and keep the same name.
 
 ## Behavior notes
 
+- The layout is a grid of boxes separated by 6px gaps: three columns on wide screens, two on tablets and one on phones.
 - Motion is skipped entirely for visitors who have "reduce motion" turned on in their device settings.
-- Carousel sections hold in place while the page scrolls, and the cards slide sideways until the last one, after which the page moves on. The ‹ › buttons and mouse dragging move the page so the carousel stays in step. Without JavaScript the carousels fall back to normal swipeable rows.
-- The curtain sweeps across when you move between pages. The first page you open plays the full logo intro; later pages only lift the curtain.
+- Moving between pages, a grid of navy tiles closes over the screen and opens on the next page. The first page you open plays the logo intro.
+- Boxes wipe up into view as you scroll. The hero photo or video shrinks into a frame as you scroll past it.
+- On computers with a mouse, a small square cursor follows the pointer and grows into an "Open" or "Read" badge over clickable boxes.
+- The Contact, Thank You, Digital Photos and Connect pages have no header or footer, as in the design.
 - The two forms (`/contact/` and `/dp/`) are LeadConnector embeds. Their fonts and colors come from the form settings in LeadConnector.
