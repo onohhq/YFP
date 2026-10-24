@@ -304,10 +304,9 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   min-height: 360px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
   padding: var(--pad); background: var(--navy); color: var(--bg);
 }
-.box-quote__top { display: flex; justify-content: space-between; gap: 16px; font-size: 17px; }
+.box-quote__top { display: flex; justify-content: flex-end; gap: 16px; font-size: 17px; }
 .box-quote__head { display: flex; flex-direction: column; gap: clamp(14px, 1.6vw, 22px); }
 .box-quote__title { margin: 0; font-family: var(--serif); font-size: clamp(44px, 4vw, 72px); line-height: .95; }
-.box-quote__top span:first-child { letter-spacing: .2em; }
 .review { margin: 0; }
 .review blockquote { margin: 0; }
 .review p { margin: 0; font-family: var(--serif); font-size: clamp(25px, 2vw, 31px); line-height: 1.28; text-wrap: pretty; }
