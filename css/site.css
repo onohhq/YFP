@@ -204,6 +204,13 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   background: rgba(17, 22, 42, .78); color: var(--bg); font-size: 16px; line-height: 1.2; pointer-events: none;
 }
 .cap::before { content: ''; flex: none; width: 7px; height: 7px; background: var(--bg); }
+/* Product name label: centered at the bottom on white */
+.cap--product {
+  left: 0; right: 0; bottom: clamp(14px, 2vw, 28px); width: max-content; max-width: calc(100% - 28px); margin-inline: auto;
+  justify-content: center; padding: 12px clamp(18px, 2vw, 28px); background: #FFF; color: var(--navy);
+  font-family: var(--serif); font-size: clamp(28px, 2.6vw, 42px); line-height: 1.05; text-align: center;
+}
+.cap--product::before { display: none; }
 
 /* Link card */
 .box-nav {
