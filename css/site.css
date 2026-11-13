@@ -182,16 +182,6 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .hero__side { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; max-width: 400px; }
 .hero__side p { margin: 0; font-size: clamp(19px, 1.6vw, 22px); line-height: 1.45; text-wrap: pretty; }
 
-/* Home hero on phones: photo fills a shorter band (less enlarging, so it stays sharp); headline sits below it on navy */
-@media (max-width: 759px) {
-  .hero--home { height: auto; min-height: 0; display: flex; flex-direction: column; background: var(--navy); }
-  .hero--home .hero__media { position: relative; inset: auto; height: 56svh; min-height: 360px; background: var(--navy); }
-  .hero--home .hero__media img { top: 0; height: 100%; object-fit: cover; object-position: center 35%; }
-  .hero--home .hero__shade { background: none; }
-  .hero--home .hero__logo { top: 16px; left: var(--edge); }
-  .hero--home .hero__copy { position: relative; left: auto; right: auto; bottom: auto; padding: 32px var(--edge) 44px; }
-}
-
 /* ---------- Box grid ---------- */
 .boxes, .site-footer {
   display: grid; gap: 6px;
