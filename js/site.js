@@ -172,7 +172,8 @@
 
   function onScrollFrame() {
     const vh = innerHeight;
-    if (hero) {
+    const phoneHome = hero && hero.classList.contains('hero--home') && innerWidth < 760;
+    if (hero && !phoneHome) {
       const q = Math.min(1, Math.max(0, scrollY / vh));
       const p = Math.min(1, scrollY / (vh * 0.3));
       const e = 1 - Math.pow(1 - p, 3);
