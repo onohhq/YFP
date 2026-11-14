@@ -184,8 +184,8 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 
 /* Phone heroes: 4:6 photo frame with the headline and button inside it at the bottom */
 @media (max-width: 759px) {
-  .hero { height: auto; min-height: 0; background: var(--navy); }
-  .hero__media { position: relative; inset: auto; width: 100%; aspect-ratio: 2 / 3; background: var(--navy); }
+  .hero { height: auto; min-height: 0; background: #FFF; }
+  .hero__media { position: relative; inset: auto; width: 100%; aspect-ratio: 2 / 3; background: #FFF; }
   .hero__media img, .hero__media video { top: 0; height: 100%; }
   .hero__shade { background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .75) 100%); }
   .hero__logo { top: 16px; }
