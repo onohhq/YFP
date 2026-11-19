@@ -80,4 +80,55 @@
     b.setAttribute('aria-expanded', String(open));
     item.querySelector('.acc__a').hidden = !open;
   }));
+  /* Gallery carousel: arrows and mouse drag */
+  $$('[data-car]').forEach(car => {
+    const track = car.querySelector('.car__track');
+    const step = () => { const im = track.querySelector('img'); return im ? im.getBoundingClientRect().width + 22 : 300; };
+    const prev = car.querySelector('[data-prev]'), next = car.querySelector('[data-next]');
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: motion ? 'smooth' : 'auto' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: motion ? 'smooth' : 'auto' }));
+    track.addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    track.querySelectorAll('img').forEach(im => im.addEventListener('load', sync));
+    setTimeout(sync, 300);
+    sync();
+    let down = false, sx = 0, sl = 0, moved = false;
+    track.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse') return;
+      down = true; moved = false; sx = e.clientX; sl = track.scrollLeft;
+      track.classList.add('is-drag');
+    });
+    addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = sl - dx;
+    });
+    addEventListener('pointerup', () => {
+      if (!down) return;
+      down = false; track.classList.remove('is-drag');
+      if (moved) { const target = Math.round(track.scrollLeft / step()) * step(); track.scrollTo({ left: target, behavior: 'smooth' }); }
+    });
+    track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  });
+
+  /* Testimonials: dots and gentle rotation */
+  $$('.rev').forEach(rev => {
+    const qs = $$('.rev__q', rev), dots = $$('.dots i', rev);
+    if (qs.length < 2) return;
+    let i = 0, timer = 0;
+    const show = n => {
+      qs[i].hidden = true; dots[i].classList.remove('on');
+      i = n; qs[i].hidden = false; dots[i].classList.add('on');
+      if (motion) qs[i].animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 800, easing: 'cubic-bezier(.16,1,.3,1)' });
+    };
+    const start = () => { clearInterval(timer); timer = setInterval(() => show((i + 1) % qs.length), 8000); };
+    dots.forEach((d, n) => d.addEventListener('click', () => { if (n !== i) show(n); start(); }));
+    start();
+  });
 })();
