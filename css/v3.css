@@ -79,10 +79,10 @@ em{font-style:italic}
 .exp__t{font-family:var(--serif);font-size:clamp(40px,3.8vw,56px);line-height:1;margin:28px 0 10px;text-align:center}
 .exp__t em{font-style:italic}
 .exp__p{text-align:center;color:var(--muted);font-size:17px;line-height:1.5;margin:0 auto;max-width:380px}
-.exp__price{text-align:center;font-family:var(--serif);font-size:40px;color:var(--navy);margin-top:14px}
+.exp__price{text-align:center;font-family:var(--serif);font-size:40px;line-height:1;color:var(--navy);margin-top:14px}
 .exp__price small{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:10px;letter-spacing:.04em}
-.exp__price small{display:block;margin:6px 0 0}
-.exp__price small.exp__from{margin:0 0 4px;font-size:13px}
+.exp__price small{display:block;margin:0;line-height:1.2}
+.exp__price small.exp__from{margin:0 0 6px;font-size:13px}
 /* confidence */
 .conf{text-align:center}
 .conf__pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px;margin:0 auto 56px}
