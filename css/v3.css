@@ -50,7 +50,6 @@ em{font-style:italic}
 .cursor.is-big span{opacity:1}
 @media (pointer:fine){html.has-cursor,html.has-cursor a,html.has-cursor button{cursor:none}}
 /* page transition */
-.wipe{position:fixed;inset:0;z-index:100;background:var(--navy);transform:translateY(100%);pointer-events:none}
 .wipe img{position:absolute;left:50%;top:50%;height:90px;width:auto;translate:-50% -50%;filter:brightness(0) invert(1)}
 /* hero */
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,96px);align-items:center;padding:150px 0 110px}
