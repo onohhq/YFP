@@ -325,7 +325,7 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .mq__row::-webkit-scrollbar{display:none}
 .mq__row img{flex:0 0 auto;height:clamp(300px,30vw,420px);width:auto;aspect-ratio:3/4;border-radius:24px;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .mq__row--2{display:none}
-@media (max-width:900px){.mq__row img{height:280px}.mq__row--2{display:flex}}
+@media (max-width:900px){.mq__row{gap:14px}.mq__row img{height:190px}.mq__row--2{display:flex}}
 
 /* connect pages: icons in the link rows */
 .lk__list a{justify-content:space-between}
