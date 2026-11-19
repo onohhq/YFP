@@ -301,13 +301,3 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
 }
 @media (max-width:560px){.ft__top{grid-template-columns:1fr 1fr}}
 
-/* ---- footer on phones: full width, edge to edge */
-@media (max-width:900px){
-  .ft{padding-left:var(--gut);padding-right:var(--gut)}
-  .ft__top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:36px 24px;width:100%}
-  .ft__top>div:not(.ft__brand){flex:0 0 auto}
-  .ft__top>div:last-of-type{text-align:right}
-  .ft__top>div:last-of-type a{display:block}
-  .ft__brand{width:100%;justify-content:space-between}
-  .ft__tag{text-align:right}
-}
