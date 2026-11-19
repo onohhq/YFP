@@ -287,6 +287,7 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
 
 /* ---- round page transition */
 .wipe{position:fixed;inset:0;z-index:100;background:var(--navy);clip-path:circle(0px at 50% 50%);pointer-events:none;display:none}
+html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .wipe img{position:absolute;left:50%;top:50%;height:90px;width:auto;translate:-50% -50%;filter:brightness(0) invert(1)}
 /* ---- page hero titles: sans, not the elegant face */
 .hero h1,.pg__hero h1{font-family:var(--sans);font-weight:500;font-size:clamp(34px,4vw,56px);line-height:1.04;letter-spacing:-.02em}

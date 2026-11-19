@@ -57,12 +57,23 @@
   const wipe = $('.wipe');
   const ENTER = 'yfp:enter';
   const EASE = 'cubic-bezier(.77,0,.18,1)';
-  if (wipe && motion && sessionStorage.getItem(ENTER)) {
-    sessionStorage.removeItem(ENTER);
-    wipe.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0px at 50% 50%)' }],
-      { duration: 900, delay: 120, easing: EASE, fill: 'both' });
-  }
-  if (wipe && motion) wipe.style.display = 'block';
+  const radius = (x, y) => Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  /* Arriving page: the navy cover is already in place from the first paint (html.entering),
+     then it opens from the tap point once the page has loaded */
+  let from = null;
+  try { from = JSON.parse(sessionStorage.getItem(ENTER) || 'null'); sessionStorage.removeItem(ENTER); } catch (err) {}
+  if (wipe && motion) {
+    wipe.style.display = 'block';
+    if (from) {
+      const open = () => {
+        root.classList.remove('entering');
+        wipe.animate([{ clipPath: `circle(${radius(from.x, from.y)}px at ${from.x}px ${from.y}px)` }, { clipPath: `circle(0px at ${from.x}px ${from.y}px)` }],
+          { duration: 800, delay: 60, easing: EASE, fill: 'both' });
+      };
+      if (document.readyState === 'complete') open();
+      else { addEventListener('load', open, { once: true }); setTimeout(open, 2500); }
+    } else root.classList.remove('entering');
+  } else root.classList.remove('entering');
   addEventListener('pageshow', e => { if (e.persisted && wipe) wipe.style.clipPath = 'circle(0px at 50% 50%)'; });
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
@@ -72,13 +83,14 @@
     e.preventDefault();
     setMenu(false);
     const cx = e.clientX || innerWidth / 2, cy = e.clientY || innerHeight / 2;
-    const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
-    sessionStorage.setItem(ENTER, '1');
-    wipe.animate([{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(${r}px at ${cx}px ${cy}px)` }],
-      { duration: 700, easing: EASE, fill: 'forwards' });
+    sessionStorage.setItem(ENTER, JSON.stringify({ x: cx, y: cy }));
+    wipe.style.display = 'block';
+    wipe.animate([{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(${radius(cx, cy)}px at ${cx}px ${cy}px)` }],
+      { duration: 550, easing: EASE, fill: 'forwards' });
     const logo = wipe.querySelector('img');
-    if (logo) logo.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: 300, fill: 'both' });
-    setTimeout(() => { location.href = url.href; }, 950);
+    if (logo) logo.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 300, delay: 200, fill: 'both' });
+    /* navigate as soon as the circle covers the screen; the next page opens from the same spot */
+    setTimeout(() => { location.href = url.href; }, 560);
   });
 
   /* Accordion (FAQ) */
