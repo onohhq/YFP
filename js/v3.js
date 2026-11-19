@@ -74,7 +74,15 @@
       else { addEventListener('load', open, { once: true }); setTimeout(open, 2500); }
     } else root.classList.remove('entering');
   } else root.classList.remove('entering');
-  addEventListener('pageshow', e => { if (e.persisted && wipe) wipe.style.clipPath = 'circle(0px at 50% 50%)'; });
+  /* Back/forward from the browser cache: the cover from the last click is still held by its finished animation, so clear it */
+  addEventListener('pageshow', e => {
+    if (!e.persisted || !wipe) return;
+    wipe.getAnimations({ subtree: true }).forEach(a => a.cancel());
+    wipe.style.clipPath = '';
+    wipe.style.display = 'none';
+    root.classList.remove('entering');
+    try { sessionStorage.removeItem(ENTER); } catch (err) {}
+  });
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
     if (!a || !wipe || !motion) return;
