@@ -301,3 +301,6 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
 }
 @media (max-width:560px){.ft__top{grid-template-columns:1fr 1fr}}
 
+
+/* pinned carousel wrapper */
+.pin{position:relative}

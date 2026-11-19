@@ -81,77 +81,72 @@
     setTimeout(() => { location.href = url.href; }, 950);
   });
 
-  /* Carousels: they move sideways as the page scrolls past them, so every card gets seen */
-  const linked = $$('.car__track, .svc').filter(t => t.scrollWidth > t.clientWidth + 2);
-  linked.forEach(t => {
-    t.addEventListener('touchstart', () => { t.__touch = true; }, { passive: true });
-    t.addEventListener('touchend', () => { setTimeout(() => { t.__touch = false; }, 1200); }, { passive: true });
-    t.addEventListener('pointerdown', () => { t.__hold = Date.now() + 1500; }, true);
-    t.closest('.car, .sec') && (t.__box = t.closest('.car, .sec'));
-  });
-  $$('.car__btn').forEach(btn => btn.addEventListener('click', () => {
-    const track = btn.closest('.car').querySelector('.car__track');
-    track.__hold = Date.now() + 1500;
-  }));
-  const drive = () => {
-    linked.forEach(t => {
-      if (t.__touch || t.classList.contains('is-drag') || (t.__hold && Date.now() < t.__hold)) return;
-      const box = (t.__box || t.parentElement).getBoundingClientRect();
-      const max = t.scrollWidth - t.clientWidth;
-      const p = Math.min(1, Math.max(0, (innerHeight - box.top) / (innerHeight + box.height)));
-      t.scrollLeft = p * max;
-    });
-  };
-  let driveRaf = 0;
-  if (motion && linked.length) {
-    const tick = () => { if (driveRaf) return; driveRaf = requestAnimationFrame(() => { driveRaf = 0; drive(); }); };
-    addEventListener('scroll', tick, { passive: true });
-    addEventListener('resize', tick);
-    drive();
-  }
-
   /* Accordion (FAQ) */
   $$('.acc__q').forEach(b => b.addEventListener('click', () => {
     const item = b.closest('.acc__item'), open = item.classList.toggle('is-open');
     b.setAttribute('aria-expanded', String(open));
     item.querySelector('.acc__a').hidden = !open;
   }));
-  /* Gallery carousel: arrows and mouse drag */
-  $$('[data-car]').forEach(car => {
-    const track = car.querySelector('.car__track');
-    const step = () => { const im = track.querySelector('img'); return im ? im.getBoundingClientRect().width + 22 : 300; };
-    const prev = car.querySelector('[data-prev]'), next = car.querySelector('[data-next]');
-    const sync = () => {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= max;
-    };
-    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: motion ? 'smooth' : 'auto' }));
-    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: motion ? 'smooth' : 'auto' }));
-    track.addEventListener('scroll', sync, { passive: true });
-    addEventListener('resize', sync);
-    track.querySelectorAll('img').forEach(im => im.addEventListener('load', sync));
-    setTimeout(sync, 300);
-    sync();
-    let down = false, sx = 0, sl = 0, moved = false;
-    track.addEventListener('pointerdown', e => {
-      if (e.pointerType !== 'mouse') return;
-      down = true; moved = false; sx = e.clientX; sl = track.scrollLeft;
-      track.classList.add('is-drag');
-    });
-    addEventListener('pointermove', e => {
-      if (!down) return;
-      const dx = e.clientX - sx;
-      if (Math.abs(dx) > 4) moved = true;
-      track.scrollLeft = sl - dx;
-    });
-    addEventListener('pointerup', () => {
-      if (!down) return;
-      down = false; track.classList.remove('is-drag');
-      if (moved) { const target = Math.round(track.scrollLeft / step()) * step(); track.scrollTo({ left: target, behavior: 'smooth' }); }
-    });
-    track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  /* Pinned carousels: the section holds still while the cards slide sideways, then the page carries on */
+  const pins = [];
+  $$('.sec').forEach(sec => {
+    const track = sec.querySelector('.svc, .car__track');
+    if (!track) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'pin';
+    sec.parentNode.insertBefore(wrap, sec);
+    wrap.appendChild(sec);
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    pins.push({ wrap, sec, track, max: 0, stick: 0 });
   });
+  const layout = () => {
+    pins.forEach(p => {
+      p.max = Math.max(0, p.track.scrollWidth - p.track.clientWidth);
+      const sh = p.sec.offsetHeight;
+      if (motion && p.max > 2) {
+        p.stick = Math.max(0, (innerHeight - sh) / 2);
+        p.sec.style.position = 'sticky';
+        p.sec.style.top = p.stick + 'px';
+        p.wrap.style.height = (sh + p.stick + p.max) + 'px';
+      } else {
+        p.sec.style.position = '';
+        p.sec.style.top = '';
+        p.wrap.style.height = '';
+      }
+    });
+    update();
+  };
+  const update = () => {
+    pins.forEach(p => {
+      const track = p.track;
+      const prev = p.sec.querySelector('[data-prev]'), next = p.sec.querySelector('[data-next]');
+      if (motion && p.max > 2) {
+        const r = p.wrap.getBoundingClientRect();
+        const prog = Math.min(1, Math.max(0, (p.stick - r.top) / p.max));
+        track.scrollLeft = prog * p.max;
+      }
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= p.max - 2;
+    });
+  };
+  // Arrow buttons move the page to the matching point in the pin, so both controls stay in step
+  $$('.car__btn').forEach(btn => btn.addEventListener('click', () => {
+    const p = pins.find(x => x.sec.contains(btn));
+    if (!p || !p.max) return;
+    const first = p.track.firstElementChild;
+    const step = first ? first.getBoundingClientRect().width + 22 : 300;
+    const dir = btn.hasAttribute('data-next') ? 1 : -1;
+    const target = Math.max(0, Math.min(p.max, p.track.scrollLeft + dir * step));
+    const wrapTop = p.wrap.getBoundingClientRect().top + scrollY;
+    window.scrollTo({ top: wrapTop - p.stick + target, behavior: motion ? 'smooth' : 'auto' });
+  }));
+  let pinRaf = 0;
+  const tick = () => { if (pinRaf) return; pinRaf = requestAnimationFrame(() => { pinRaf = 0; update(); }); };
+  addEventListener('scroll', tick, { passive: true });
+  addEventListener('resize', layout);
+  addEventListener('load', layout);
+  layout();
 
   /* Testimonials: dots and gentle rotation */
   $$('.rev').forEach(rev => {
