@@ -168,19 +168,29 @@
   addEventListener('load', layout);
   layout();
 
-  /* Testimonials: dots and gentle rotation */
-  $$('.rev').forEach(rev => {
-    const qs = $$('.rev__q', rev), dots = $$('.dots i', rev);
-    if (qs.length < 2) return;
-    let i = 0, timer = 0;
+  /* Testimonials: previous/next buttons, dots and swipe. No auto-advance, so readers stay on the one they chose */
+  $$('[data-qz]').forEach(z => {
+    const qs = $$('.rev__q', z), dots = $$('.dots i', z), track = $('.rev__qs', z);
+    if (!qs.length) return;
+    let i = 0, x0 = null;
     const show = n => {
-      qs[i].hidden = true; dots[i].classList.remove('on');
-      i = n; qs[i].hidden = false; dots[i].classList.add('on');
-      if (motion) qs[i].animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 800, easing: 'cubic-bezier(.16,1,.3,1)' });
+      i = (n + qs.length) % qs.length;
+      qs.forEach((q, k) => q.classList.toggle('is-on', k === i));
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+      if (motion) qs[i].animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
     };
-    const start = () => { clearInterval(timer); timer = setInterval(() => show((i + 1) % qs.length), 8000); };
-    dots.forEach((d, n) => d.addEventListener('click', () => { if (n !== i) show(n); start(); }));
-    start();
+    $('[data-prev]', z).addEventListener('click', () => show(i - 1));
+    $('[data-next]', z).addEventListener('click', () => show(i + 1));
+    dots.forEach((d, n) => {
+      d.addEventListener('click', () => show(n));
+      d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(n); } });
+    });
+    track.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    }, { passive: true });
   });
   /* Gallery rows: auto-scroll, pause while touched or scrolled by hand, resume when it stops */
   const galHold = { paused: false, t: 0 };
