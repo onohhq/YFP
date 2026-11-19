@@ -1,9 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /thankyou/
-Disallow: /dp/
-Disallow: /connect/
-Disallow: /connect2/
 
 User-agent: GPTBot
 Allow: /

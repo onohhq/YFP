@@ -29,3 +29,6 @@ ErrorDocument 404 /404.html
 <Files "README.md">
   Require all denied
 </Files>
+
+# The page templates used to build the site are not for the public website
+RedirectMatch 404 ^/source/
