@@ -62,7 +62,7 @@
     wipe.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0px at 50% 50%)' }],
       { duration: 900, delay: 120, easing: EASE, fill: 'both' });
   }
-  if (wipe && !motion) wipe.style.display = 'none';
+  if (wipe && motion) wipe.style.display = 'block';
   addEventListener('pageshow', e => { if (e.persisted && wipe) wipe.style.clipPath = 'circle(0px at 50% 50%)'; });
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
