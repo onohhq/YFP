@@ -304,3 +304,11 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
 
 /* pinned carousel wrapper */
 .pin{position:relative}
+
+/* weddings gallery: auto-scrolling rows */
+.mq{display:flex;flex-direction:column;gap:16px}
+.mq__row{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;padding:4px 0;touch-action:pan-x pan-y}
+.mq__row::-webkit-scrollbar{display:none}
+.mq__row img{flex:0 0 auto;height:clamp(300px,30vw,420px);width:auto;aspect-ratio:3/4;border-radius:24px;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.mq__row--2{display:none}
+@media (max-width:900px){.mq__row img{height:280px}.mq__row--2{display:flex}}

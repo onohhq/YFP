@@ -162,4 +162,38 @@
     dots.forEach((d, n) => d.addEventListener('click', () => { if (n !== i) show(n); start(); }));
     start();
   });
+  /* Gallery rows: auto-scroll, pause while touched or scrolled by hand, resume when it stops */
+  const galHold = { paused: false, t: 0 };
+  $$('.mq__row').forEach(row => {
+    row.insertAdjacentHTML('beforeend', row.innerHTML);
+    const dir = row.dataset.dir === 'rev' ? -1 : 1;
+    const speed = 0.6;
+    let pos = 0, idle = 0;
+    const half = () => row.scrollWidth / 2;
+    pos = dir > 0 ? 0 : half();
+    row.scrollLeft = pos;
+    const hold = () => { galHold.paused = true; clearTimeout(galHold.t); };
+    const release = () => { clearTimeout(galHold.t); galHold.t = setTimeout(() => { galHold.paused = false; }, 1500); };
+    row.addEventListener('pointerdown', hold);
+    row.addEventListener('touchstart', hold, { passive: true });
+    row.addEventListener('wheel', () => { hold(); release(); }, { passive: true });
+    row.addEventListener('pointerup', release);
+    row.addEventListener('pointercancel', release);
+    row.addEventListener('touchend', release, { passive: true });
+    if (!motion) return;
+    const step = () => {
+      const h = half();
+      if (galHold.paused) {
+        pos = row.scrollLeft;
+      } else {
+        if (Math.abs(row.scrollLeft - pos) > 1.5) pos = row.scrollLeft;
+        pos += dir * speed;
+        if (pos >= h) pos -= h;
+        else if (pos < 0) pos += h;
+        row.scrollLeft = pos;
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
 })();
