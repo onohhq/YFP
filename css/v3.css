@@ -269,3 +269,18 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
   .exp{gap:36px}
   .svc{gap:32px}
 }
+
+/* Services: black caps titles with arrow beside; phones swipe sideways */
+.svc__t{margin:0;text-align:left;font-family:var(--sans);font-weight:500;font-size:clamp(26px,2.4vw,34px);line-height:1.05;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);font-style:normal}
+.svc__row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px}
+.svc__go{flex:none;width:60px;height:60px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;transition:background .4s,transform .5s var(--ease)}
+.svc__go svg{width:20px;height:20px}
+.svc__item:hover .svc__go{background:var(--blue);transform:rotate(45deg)}
+.svc__item:nth-child(2){margin-top:0}
+@media (max-width:900px){
+  .svc{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0;padding:0 0 8px}
+  .svc::-webkit-scrollbar{display:none}
+  .svc__item{flex:0 0 78%;scroll-snap-align:start}
+  .svc__t{font-size:30px}
+  .svc__go{width:56px;height:56px}
+}
