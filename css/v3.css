@@ -128,3 +128,60 @@ em{font-style:italic}
   .conf__pair div:nth-child(2){margin-top:36px}
   .ft__top{grid-template-columns:1fr}
 }
+/* page header block */
+.pg{padding:150px 0 40px}
+.pg__hero{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,96px);align-items:center;padding-bottom:110px}
+.pg__hero h1{font-family:var(--serif);font-size:clamp(52px,6vw,88px);line-height:.98}
+.pg__hero h1 em{display:block}
+.pg__hero p{font-size:20px;line-height:1.55;color:var(--muted);max-width:460px;margin:24px 0 36px}
+.pg__ph{aspect-ratio:4/5;border-radius:28px;overflow:hidden}
+.pg__ph img{transition:transform 1.6s var(--ease)}
+/* reasons (numbered, centered) */
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;text-align:center}
+.reasons div{background:var(--white);border-radius:24px;padding:36px 28px}
+.reasons b{display:block;font:400 56px var(--serif);color:var(--blue);margin-bottom:12px;line-height:1}
+.reasons p{margin:0;font-size:18px;line-height:1.5;color:var(--muted)}
+/* simple gallery row */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.gal div{aspect-ratio:3/4;border-radius:28px;overflow:hidden}
+/* accordion */
+.acc{max-width:880px;margin:0 auto;text-align:left}
+.acc__item{border-bottom:1px solid var(--line)}
+.acc__q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:30px 0;background:none;border:0;color:var(--ink);font-family:var(--serif);font-size:clamp(26px,2.6vw,36px);line-height:1.15;text-align:left;cursor:pointer}
+.acc__q i{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--navy);display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--sans);font-size:22px;transition:transform .5s var(--ease),background .4s,color .4s}
+.acc__item.is-open .acc__q i{transform:rotate(45deg);background:var(--navy);color:#fff}
+.acc__a{padding:0 0 32px;font-size:18px;line-height:1.6;color:var(--muted);max-width:720px;white-space:pre-line}
+/* contact form */
+.form{background:var(--white);border-radius:28px;overflow:hidden;max-width:820px;margin:0 auto;box-shadow:0 20px 50px rgba(17,22,42,.08)}
+.form iframe{display:block;width:100%;border:none}
+/* links pages */
+.lk{min-height:100vh;min-height:100dvh;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;padding:60px var(--gut);position:relative;overflow:hidden}
+.lk__in{width:100%;max-width:520px;text-align:center;position:relative}
+.lk__in img.logo{height:70px;width:auto;margin:0 auto 34px;filter:brightness(0) invert(1)}
+.lk h1{font-family:var(--serif);font-size:clamp(34px,4vw,48px);line-height:1.05;margin:0 0 34px}
+.lk h1 em{font-style:italic}
+.lk__list{display:flex;flex-direction:column;gap:14px}
+.lk__list a{display:flex;justify-content:space-between;align-items:center;height:64px;padding:0 26px;border:1px solid rgba(255,255,255,.4);border-radius:999px;font-size:17px;transition:background .4s,color .4s}
+.lk__list a:hover{background:#fff;color:var(--navy)}
+.lk__list a.is-solid{background:#fff;color:var(--navy);border-color:#fff}
+.lk__list a.is-solid:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* thank you */
+.ty{text-align:center;padding:170px 0 120px}
+.ty h1{font-family:var(--serif);font-size:clamp(56px,7vw,104px);line-height:.98;margin:0 0 30px}
+.ty h1 em{font-style:italic}
+.ty p{font-size:20px;line-height:1.6;color:var(--muted);max-width:640px;margin:0 auto 14px}
+.ty .pill{margin-top:36px}
+/* 404 */
+.nf{text-align:center;padding:200px 0 140px}
+.nf h1{font-family:var(--serif);font-size:clamp(70px,10vw,150px);line-height:1}
+.nf p{font-size:20px;color:var(--muted);margin:20px 0 36px}
+/* strip */
+.strip{text-align:center;padding:60px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--serif);font-size:clamp(30px,3.6vw,50px);line-height:1.15}
+.strip em{font-style:italic}
+@media (max-width:900px){
+  .pg__hero{grid-template-columns:1fr;gap:36px;padding-bottom:72px}
+  .pg__hero p{margin:18px 0 28px}
+  .gal{grid-template-columns:1fr 1fr;gap:12px}
+  .gal div:nth-child(3){display:none}
+}
+@media (max-width:560px){.pg{padding-top:120px}.gal{grid-template-columns:1fr 1fr}}

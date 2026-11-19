@@ -9,14 +9,17 @@
   /* Menu */
   const menu = $('.menu'), btn = $('.menu-btn');
   const setMenu = open => {
+    if (!menu) return;
     menu.classList.toggle('is-open', open);
     btn.setAttribute('aria-expanded', String(open));
     btn.querySelector('span').textContent = open ? 'Close' : 'Menu';
     document.body.style.overflow = open ? 'hidden' : '';
   };
-  btn.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
-  $('.menu__x').addEventListener('click', () => setMenu(false));
-  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  if (menu && btn) {
+    btn.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
+    $('.menu__x').addEventListener('click', () => setMenu(false));
+    addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  }
 
   /* Scroll reveals */
   if (motion && 'IntersectionObserver' in window) {
@@ -86,4 +89,10 @@
   } else if (wipe) {
     wipe.style.display = 'none';
   }
+  /* Accordion (FAQ) */
+  $$('.acc__q').forEach(b => b.addEventListener('click', () => {
+    const item = b.closest('.acc__item'), open = item.classList.toggle('is-open');
+    b.setAttribute('aria-expanded', String(open));
+    item.querySelector('.acc__a').hidden = !open;
+  }));
 })();
