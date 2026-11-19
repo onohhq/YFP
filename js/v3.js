@@ -65,13 +65,18 @@
   if (wipe && motion) {
     wipe.style.display = 'block';
     if (from) {
+      /* runs once only: the load event and the fallback timer must not both open the cover */
+      let opened = false, fallback = 0;
       const open = () => {
+        if (opened) return;
+        opened = true;
+        clearTimeout(fallback);
         root.classList.remove('entering');
         wipe.animate([{ clipPath: `circle(${radius(from.x, from.y)}px at ${from.x}px ${from.y}px)` }, { clipPath: `circle(0px at ${from.x}px ${from.y}px)` }],
           { duration: 800, delay: 60, easing: EASE, fill: 'both' });
       };
       if (document.readyState === 'complete') open();
-      else { addEventListener('load', open, { once: true }); setTimeout(open, 2500); }
+      else { addEventListener('load', open, { once: true }); fallback = setTimeout(open, 2500); }
     } else root.classList.remove('entering');
   } else root.classList.remove('entering');
   /* Back/forward from the browser cache: the cover from the last click is still held by its finished animation, so clear it */
