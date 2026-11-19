@@ -284,3 +284,19 @@ a:hover>.exp__ph .arr,a:hover .arr{transform:rotate(45deg);background:var(--blue
   .svc__t{font-size:30px}
   .svc__go{width:56px;height:56px}
 }
+
+/* ---- round page transition */
+.wipe{position:fixed;inset:0;z-index:100;background:var(--navy);clip-path:circle(0px at 50% 50%);pointer-events:none;display:block}
+.wipe img{position:absolute;left:50%;top:50%;height:90px;width:auto;translate:-50% -50%;filter:brightness(0) invert(1)}
+/* ---- page hero titles: sans, not the elegant face */
+.hero h1,.pg__hero h1{font-family:var(--sans);font-weight:500;font-size:clamp(34px,4vw,56px);line-height:1.04;letter-spacing:-.02em}
+.hero h1 em,.pg__hero h1 em{font-family:var(--sans);font-style:normal;color:var(--blue)}
+@media (max-width:900px){.hero h1,.pg__hero h1{font-size:clamp(30px,8vw,40px)}}
+/* ---- footer: logo + tagline on one row; Pages and Follow side by side */
+@media (max-width:900px){
+  .ft__top{grid-template-columns:1fr 1fr;gap:36px 24px}
+  .ft__brand{grid-column:1/-1;display:flex;align-items:center;gap:18px}
+  .ft__brand img{height:56px;width:auto}
+  .ft__tag{margin:0;font-size:22px;max-width:none}
+}
+@media (max-width:560px){.ft__top{grid-template-columns:1fr 1fr}}

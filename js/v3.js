@@ -53,10 +53,17 @@
     })();
   }
 
-  /* Page transition: navy panel rises, logo shows, then navigate */
+  /* Page transition: a circle opens from the click point, shows the logo, then the next page opens from the same spot */
   const wipe = $('.wipe');
-  const logoIn = () => {};
-  addEventListener('pageshow', e => { if (e.persisted && wipe) wipe.style.transform = 'translateY(100%)'; });
+  const ENTER = 'yfp:enter';
+  const EASE = 'cubic-bezier(.77,0,.18,1)';
+  if (wipe && motion && sessionStorage.getItem(ENTER)) {
+    sessionStorage.removeItem(ENTER);
+    wipe.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0px at 50% 50%)' }],
+      { duration: 900, delay: 120, easing: EASE, fill: 'both' });
+  }
+  if (wipe && !motion) wipe.style.display = 'none';
+  addEventListener('pageshow', e => { if (e.persisted && wipe) wipe.style.clipPath = 'circle(0px at 50% 50%)'; });
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
     if (!a || !wipe || !motion) return;
@@ -64,16 +71,45 @@
     if (url.origin !== location.origin || url.pathname === location.pathname || a.target === '_blank') return;
     e.preventDefault();
     setMenu(false);
-    wipe.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 700, easing: 'cubic-bezier(.77,0,.18,1)', fill: 'forwards' });
-    setTimeout(() => { location.href = url.href; }, 720);
+    const cx = e.clientX || innerWidth / 2, cy = e.clientY || innerHeight / 2;
+    const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+    sessionStorage.setItem(ENTER, '1');
+    wipe.animate([{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(${r}px at ${cx}px ${cy}px)` }],
+      { duration: 700, easing: EASE, fill: 'forwards' });
+    const logo = wipe.querySelector('img');
+    if (logo) logo.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: 300, fill: 'both' });
+    setTimeout(() => { location.href = url.href; }, 950);
   });
-  // Entrance: wipe lifts on load
-  if (wipe && motion) {
-    wipe.style.transform = 'translateY(0)';
-    wipe.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 900, delay: 150, easing: 'cubic-bezier(.77,0,.18,1)', fill: 'forwards' });
-  } else if (wipe) {
-    wipe.style.display = 'none';
+
+  /* Carousels: they move sideways as the page scrolls past them, so every card gets seen */
+  const linked = $$('.car__track, .svc').filter(t => t.scrollWidth > t.clientWidth + 2);
+  linked.forEach(t => {
+    t.addEventListener('touchstart', () => { t.__touch = true; }, { passive: true });
+    t.addEventListener('touchend', () => { setTimeout(() => { t.__touch = false; }, 1200); }, { passive: true });
+    t.addEventListener('pointerdown', () => { t.__hold = Date.now() + 1500; }, true);
+    t.closest('.car, .sec') && (t.__box = t.closest('.car, .sec'));
+  });
+  $$('.car__btn').forEach(btn => btn.addEventListener('click', () => {
+    const track = btn.closest('.car').querySelector('.car__track');
+    track.__hold = Date.now() + 1500;
+  }));
+  const drive = () => {
+    linked.forEach(t => {
+      if (t.__touch || t.classList.contains('is-drag') || (t.__hold && Date.now() < t.__hold)) return;
+      const box = (t.__box || t.parentElement).getBoundingClientRect();
+      const max = t.scrollWidth - t.clientWidth;
+      const p = Math.min(1, Math.max(0, (innerHeight - box.top) / (innerHeight + box.height)));
+      t.scrollLeft = p * max;
+    });
+  };
+  let driveRaf = 0;
+  if (motion && linked.length) {
+    const tick = () => { if (driveRaf) return; driveRaf = requestAnimationFrame(() => { driveRaf = 0; drive(); }); };
+    addEventListener('scroll', tick, { passive: true });
+    addEventListener('resize', tick);
+    drive();
   }
+
   /* Accordion (FAQ) */
   $$('.acc__q').forEach(b => b.addEventListener('click', () => {
     const item = b.closest('.acc__item'), open = item.classList.toggle('is-open');
