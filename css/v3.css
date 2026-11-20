@@ -391,3 +391,13 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .edu h3{font-family:var(--serif);font-size:30px;line-height:1.1;margin:0 0 12px;color:var(--navy)}
 .edu p{font-size:16px;line-height:1.6;color:var(--muted);margin:0}
 @media (max-width:900px){.edu{grid-template-columns:1fr;gap:16px}.edu>div{padding:26px 24px}}
+
+/* events page: image-led feature rows */
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center;max-width:1240px;margin:0 auto;padding:clamp(40px,6vw,80px) var(--gut)}
+.feat__ph{aspect-ratio:4/5;border-radius:28px;overflow:hidden}
+.feat__ph img{width:100%;height:100%;object-fit:cover}
+.feat--flip .feat__ph{order:2}
+.feat__t{font-family:var(--serif);font-size:clamp(40px,4.4vw,64px);line-height:1;margin:0 0 20px;color:var(--ink)}
+.feat__t em{font-style:italic}
+.feat__p{font-size:18px;line-height:1.6;color:var(--muted);margin:0 0 28px;max-width:480px}
+@media (max-width:900px){.feat{grid-template-columns:1fr;gap:28px}.feat--flip .feat__ph{order:0}.feat__ph{aspect-ratio:4/4.4}}
