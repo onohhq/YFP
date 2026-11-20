@@ -372,13 +372,18 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .float__tile.t1{left:6%;top:8%;animation-delay:0s}
 .float__tile.t2{left:24%;top:46%;width:130px;animation-delay:-2s;animation-duration:9s}
 .float__tile.t3{left:44%;top:6%;width:120px;animation-delay:-4s;animation-duration:7s}
-.float__tile.t4{left:58%;top:52%;width:150px;animation-delay:-1s;animation-duration:10s}
+.float__tile.t4{left:68%;top:66%;width:150px;animation-delay:-1s;animation-duration:10s}
 .float__tile.t5{right:24%;top:10%;width:130px;animation-delay:-3s;animation-duration:8.5s}
 .float__tile.t6{right:6%;top:48%;width:160px;animation-delay:-5s;animation-duration:9.5s}
 .float__mid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;font-size:18px;color:var(--muted);white-space:nowrap}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
 @media (prefers-reduced-motion:reduce){.float__tile{animation:none}}
-@media (max-width:900px){.float{height:420px}.float__tile{width:110px!important}.float__tile.t6,.float__tile.t4{display:none}}
+@media (max-width:900px){
+  .float{height:auto;max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:8px var(--gut) 40px}
+  .float__mid{position:static;transform:none;grid-column:1/-1;order:-1;white-space:normal;text-align:center;padding:0 0 8px}
+  .float__tile{position:relative;left:auto!important;right:auto!important;top:auto!important;width:auto!important;animation:none}
+  .float__tile.t4,.float__tile.t6{display:none}
+}
 
 /* educational cards under each service hero */
 .edu{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:8px auto 40px;max-width:1240px;padding:0 var(--gut)}
