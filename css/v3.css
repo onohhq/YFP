@@ -531,9 +531,13 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 }
 
 /* mobile menu: social link */
-.menu__social{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 22px}
-.menu__social a{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px 0 14px;border-radius:999px;background:#fff;color:var(--navy);font-size:16px;font-weight:500}
-.menu__social img{width:20px;height:20px}
+.menu__social{display:flex;gap:28px;flex-wrap:wrap;margin:0 0 20px}
+.menu__social a{display:inline-flex;align-items:center;gap:10px;color:#fff;font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;transition:opacity .3s}
+.menu__social a:hover{opacity:1}
+.menu__social svg{flex:none}
 
 /* pinned rows: cards slide on the compositor; the section clips them at the screen edges */
 .pin .sec{overflow-x:clip}
+
+/* home hero without a paragraph: give the buttons room below the heading */
+@media (min-width:901px){.hero h1{margin-bottom:40px}}
