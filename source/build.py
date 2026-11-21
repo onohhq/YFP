@@ -38,7 +38,7 @@ def head(title, desc, path, noindex=False):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;display=swap">
 <script>(function(d){{d.classList.add('js');try{{if(sessionStorage.getItem('yfp:enter')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('entering')}}catch(e){{}}}})(document.documentElement)</script>
-<link rel="stylesheet" href="/css/v3.css?v=59">
+<link rel="stylesheet" href="/css/v3.css?v=64">
 <script src="/js/v3.js?v=57" defer></script>
 </head>
 <body>
@@ -201,7 +201,7 @@ P['events']=page('Event Photo Experiences: Corporate, Birthdays, Galas | Your Fa
  types('Events <em>we cover</em>',[
   ('/corporate/','corporate-guest.webp','A guest in a rust dress posing at a branded backdrop','Corporate events','Holiday parties, conferences and client nights, with your branding on every photo.','Learn more'),
   ('/weddings/','couple-bw.jpg','A couple posing together in black and white','Weddings','A portrait station guests visit between the toasts and the dance floor.','Learn more'),
-  ('/corporate/','hd/booth-red-lg.jpg','A red branded booth at a brand activation','Brand activations','Branded booths and instant sharing that put your launch in front of more people.','Learn more'),
+  ('/corporate/','booth-red.jpg','A guest posing with a treat in front of a branded backdrop','Brand activations','Branded booths and instant sharing that put your launch in front of more people.','Learn more'),
   ('/contact/','hd/hero3.jpg','A guest posing with a blue feather fan','Birthdays','Milestone birthdays deserve photos as good as the outfits.','Check your date'),
   ('/contact/','anniversary.jpg','A couple in red traditional attire sharing a kiss','Anniversaries','Portraits for the two of you, and for everyone who came to celebrate.','Check your date'),
   ('/contact/','hd/hero1.jpg','A guest in a flowing gown posing among white flowers in black and white','Galas and private parties','Formal nights and cultural celebrations, styled to match your theme.','Check your date')])+
