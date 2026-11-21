@@ -143,10 +143,16 @@
         p.sec.style.position = 'sticky';
         p.sec.style.top = p.stick + 'px';
         p.wrap.style.height = (sh + p.stick + p.max) + 'px';
+        p.track.style.overflowX = 'hidden';
+        p.track.style.touchAction = 'pan-y';
+        p.linked = true;
       } else {
         p.sec.style.position = '';
         p.sec.style.top = '';
         p.wrap.style.height = '';
+        p.track.style.overflowX = '';
+        p.track.style.touchAction = '';
+        p.linked = false;
       }
     });
     update();
@@ -175,6 +181,44 @@
     const wrapTop = p.wrap.getBoundingClientRect().top + scrollY;
     window.scrollTo({ top: wrapTop - p.stick + target, behavior: motion ? 'smooth' : 'auto' });
   }));
+  /* A sideways swipe (or trackpad scroll) on a pinned row scrolls the page itself. The row only ever moves with
+     the page, so it can't be dragged out of step, and scrolling up or down carries on from wherever it was left. */
+  pins.forEach(p => {
+    let x = 0, y = 0, axis = null, t = 0, v = 0, glide = 0;
+    const stopGlide = () => { if (glide) cancelAnimationFrame(glide); glide = 0; };
+    p.track.addEventListener('touchstart', e => {
+      if (!p.linked) return;
+      stopGlide();
+      x = e.touches[0].clientX; y = e.touches[0].clientY; axis = null; t = performance.now(); v = 0;
+    }, { passive: true });
+    p.track.addEventListener('touchmove', e => {
+      if (!p.linked) return;
+      const nx = e.touches[0].clientX, ny = e.touches[0].clientY, dx = nx - x, dy = ny - y;
+      if (axis === null && Math.abs(dx) + Math.abs(dy) > 6) axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      if (axis !== 'x') return;
+      e.preventDefault();
+      const now = performance.now();
+      v = -dx / Math.max(1, now - t);
+      t = now; x = nx; y = ny;
+      window.scrollBy(0, -dx);
+    }, { passive: false });
+    p.track.addEventListener('touchend', () => {
+      if (!p.linked || axis !== 'x' || !motion) return;
+      let speed = v * 16;
+      const step = () => {
+        speed *= 0.94;
+        if (Math.abs(speed) < 0.4) { glide = 0; return; }
+        window.scrollBy(0, speed);
+        glide = requestAnimationFrame(step);
+      };
+      glide = requestAnimationFrame(step);
+    }, { passive: true });
+    p.track.addEventListener('wheel', e => {
+      if (!p.linked || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      window.scrollBy(0, e.deltaX);
+    }, { passive: false });
+  });
   let pinRaf = 0;
   const tick = () => { if (pinRaf) return; pinRaf = requestAnimationFrame(() => { pinRaf = 0; update(); }); };
   addEventListener('scroll', tick, { passive: true });

@@ -370,8 +370,8 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 
 /* home: photo wall. Columns of frames hang from the top of a rounded panel, drop in when it scrolls into view, then drift */
 .wall-sec{padding-top:24px;padding-bottom:24px}
-.wall{position:relative;border-radius:36px;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f9fafc 100%);box-shadow:0 40px 80px -56px rgba(17,22,42,.35),0 0 0 1px rgba(17,22,42,.04)}
-.wall__cols{--k:1;--w:clamp(96px,10.5vw,132px);display:flex;justify-content:center;gap:14px;height:calc(var(--w) * 2.85 + 70px * var(--k) + 24px + 16px + 36px);padding:0 16px}
+.wall{position:relative;overflow:hidden}
+.wall__cols{--k:1;--w:clamp(84px,7.6vw,108px);display:flex;justify-content:center;gap:14px;height:calc(var(--w) * 2.85 + 120px * var(--k) + 24px + 16px + 36px);padding:0}
 .wall__col{flex:0 0 var(--w);margin-top:calc(var(--o) * var(--k) - var(--w) * .9)}
 .wall__drift{position:relative;display:flex;flex-direction:column;gap:12px;animation:wallDrift 9s ease-in-out infinite}
 .wall__ghost,.wall__tile{aspect-ratio:4/5;border-radius:16px;overflow:hidden}
@@ -392,14 +392,17 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .wall__text h2 span{display:block;color:#9aa0ad;text-wrap:balance}
 .js .wall__col{opacity:0;transform:translateY(-80px);transition:opacity .9s var(--ease),transform 1.2s cubic-bezier(.2,.9,.25,1.08)}
 .js .wall.is-in .wall__col{opacity:1;transform:none}
-.wall__col.c2{transition-delay:.08s}.wall__col.c3{transition-delay:.16s}.wall__col.c4{transition-delay:.24s}.wall__col.c5{transition-delay:.32s}.wall__col.c6{transition-delay:.4s}.wall__col.c7{transition-delay:.48s}
+.wall__col.c2{transition-delay:.08s}.wall__col.c3{transition-delay:.16s}.wall__col.c4{transition-delay:.24s}.wall__col.c5{transition-delay:.32s}.wall__col.c6{transition-delay:.4s}.wall__col.c7{transition-delay:.48s}.wall__col.c8{transition-delay:.56s}.wall__col.c9{transition-delay:.64s}
+.wall__col.c8 .wall__drift{animation-duration:9.8s;animation-delay:-7s}
+.wall__col.c9 .wall__drift{animation-duration:11.5s;animation-delay:-2.5s}
+.wall__tile--m{display:none}
 .js .wall__text{opacity:0;transform:translateY(16px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
 .js .wall.is-in .wall__text{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.wall__drift{animation:none}.js .wall__col,.js .wall__text{transform:none;transition:opacity .4s}}
 @media (max-width:900px){
-  .wall{border-radius:28px}
-  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 32px - 3 * 10px) / 4);gap:10px}
-  .wall__col.c5,.wall__col.c6,.wall__col.c7{display:none}
+  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 3 * 10px) / 4);gap:10px;height:calc(var(--w) * 4.1 + 110px * var(--k) + 30px + 16px + 30px)}
+  .wall__col.c5,.wall__col.c6,.wall__col.c7,.wall__col.c8,.wall__col.c9{display:none}
+  .wall__tile--m{display:block}
   .wall__drift{gap:10px}
   .wall__ghost,.wall__tile{border-radius:12px}
   .wall__drift::after{height:32px}
@@ -503,18 +506,17 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
   .ty1__rev p{font-size:15px}
 }
 
-/* phones: rows that slide sideways while the page holds still. Two portrait cards at a time, sized to fit one screen */
+/* phones: rows that slide sideways while the page holds still. One full card with a sliver of the next;
+   the photo height leaves room for the heading and card text so the whole section fits below the header */
 @media (max-width:600px){
   .pin .sec{padding-top:20px;padding-bottom:20px}
   .pin .sec__h{font-size:30px;margin-bottom:16px}
   .pin .svc,.pin .incl,.pin .types{gap:12px}
-  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 46%;scroll-snap-align:start}
-  .pin .incl__ph,.pin .types__ph,.pin .svc__ph{height:auto;aspect-ratio:4/5;margin-bottom:12px;border-radius:18px}
+  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 86%}
+  .pin .incl__ph,.pin .types__ph,.pin .svc__ph{aspect-ratio:auto;width:100%;height:min(calc((100vw - 2 * var(--gut)) * .86), calc(100svh - 380px));margin-bottom:14px;border-radius:20px}
   .pin .incl__ph img,.pin .types__ph img,.pin .svc__ph img{object-position:center 22%}
-  .pin .svc__t,.pin .types__c h3{font-size:15px;letter-spacing:.04em}
-  .pin .incl h3{font-size:16px}
-  .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:13.5px;line-height:1.5}
-  .pin .types__go{font-size:14px;margin-top:8px}
-  .pin .svc__go{width:34px;height:34px;flex:none}
-  .pin .svc__go svg{width:14px;height:14px}
+  .pin .svc__t,.pin .types__c h3,.pin .incl h3{font-size:18px}
+  .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:15px;line-height:1.5}
+  .pin .svc__go{width:44px;height:44px;flex:none}
+}
 }
