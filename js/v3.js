@@ -21,14 +21,22 @@
     addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
   }
 
+  /* Header: solid background once the page scrolls, so content never shows through it */
+  const hdr = $('.hdr');
+  if (hdr) {
+    const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 12);
+    onScroll();
+    addEventListener('scroll', onScroll, { passive: true });
+  }
+
   /* Scroll reveals */
   if (motion && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => entries.forEach(en => {
       if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
     }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    $$('.reveal').forEach(el => io.observe(el));
+    $$('.reveal, .float').forEach(el => io.observe(el));
   } else {
-    $$('.reveal').forEach(el => el.classList.add('is-in'));
+    $$('.reveal, .float').forEach(el => el.classList.add('is-in'));
   }
 
   /* Custom cursor (fine pointers only) */
