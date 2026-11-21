@@ -400,7 +400,7 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .js .wall.is-in .wall__text{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.wall__drift{animation:none}.js .wall__col,.js .wall__text{transform:none;transition:opacity .4s}}
 @media (max-width:900px){
-  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 3 * 10px) / 4);gap:10px;height:calc(var(--w) * 4.1 + 110px * var(--k) + 30px + 16px + 30px)}
+  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 3 * 10px) / 4);gap:10px;height:calc(var(--w) * 2.85 + 110px * var(--k) + 20px + 16px + 30px)}
   .wall__col.c5,.wall__col.c6,.wall__col.c7,.wall__col.c8,.wall__col.c9{display:none}
   .wall__tile--m{display:block}
   .wall__drift{gap:10px}
@@ -470,7 +470,7 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .feat__t{font-family:var(--serif);font-size:clamp(40px,4.4vw,64px);line-height:1;margin:0 0 20px;color:var(--ink)}
 .feat__t em{font-style:italic}
 .feat__p{font-size:18px;line-height:1.6;color:var(--muted);margin:0 0 28px;max-width:480px}
-@media (max-width:900px){.feat{grid-template-columns:1fr;gap:28px}.feat--flip .feat__ph{order:0}.feat__ph{aspect-ratio:4/4.4}}
+@media (max-width:900px){.feat{grid-template-columns:1fr;gap:28px}.feat--flip .feat__ph{order:0}.feat__ph{aspect-ratio:4/5}}
 
 /* eyebrow above hero headings: small caps line, always first, never styled as the lede */
 .hero .eyebrow,.pg__hero .eyebrow{order:0;font-size:13px;line-height:1.5;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:none;margin:0 0 16px}
@@ -506,17 +506,27 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
   .ty1__rev p{font-size:15px}
 }
 
-/* phones: rows that slide sideways while the page holds still. One full card with a sliver of the next;
-   the photo height leaves room for the heading and card text so the whole section fits below the header */
+/* phones: rows that slide sideways while the page holds still. Portrait frames and large titles, like the desktop cards.
+   Card width follows the screen height so a whole portrait card, its title and text fit below the header while pinned */
 @media (max-width:600px){
-  .pin .sec{padding-top:20px;padding-bottom:20px}
-  .pin .sec__h{font-size:30px;margin-bottom:16px}
-  .pin .svc,.pin .incl,.pin .types{gap:12px}
-  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 86%}
-  .pin .incl__ph,.pin .types__ph,.pin .svc__ph{aspect-ratio:auto;width:100%;height:min(calc((100vw - 2 * var(--gut)) * .86), calc(100svh - 380px));margin-bottom:14px;border-radius:20px}
+  .pin .sec{padding-top:18px;padding-bottom:18px}
+  .pin .sec__h{font-size:30px;margin-bottom:14px}
+  .pin .svc,.pin .incl,.pin .types{gap:14px}
+  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 min(86%, calc((100svh - 330px) * .8))}
+  .pin .incl__ph,.pin .types__ph,.pin .svc__ph{aspect-ratio:4/5;height:auto;width:100%;margin-bottom:14px;border-radius:24px}
   .pin .incl__ph img,.pin .types__ph img,.pin .svc__ph img{object-position:center 22%}
-  .pin .svc__t,.pin .types__c h3,.pin .incl h3{font-size:18px}
+  .pin .svc__t,.pin .types__c h3{font-size:22px;line-height:1.1;letter-spacing:.05em}
+  .pin .incl h3{font-size:20px}
+  .pin .svc__row{gap:12px}
+  .pin .svc__go{width:46px;height:46px;flex:none}
   .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:15px;line-height:1.5}
-  .pin .svc__go{width:44px;height:44px;flex:none}
 }
+@media (max-width:600px) and (max-height:640px){
+  .pin .sec{padding-top:8px;padding-bottom:8px}
+  .pin .sec__h{font-size:26px;margin-bottom:10px}
+  .pin .incl__ph,.pin .types__ph,.pin .svc__ph{margin-bottom:10px}
+  .pin .svc__t,.pin .types__c h3{font-size:19px}
+  .pin .incl h3{font-size:18px}
+  .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:14px;line-height:1.45}
+  .pin .types__go{margin-top:8px}
 }

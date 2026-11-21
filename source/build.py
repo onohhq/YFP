@@ -38,8 +38,8 @@ def head(title, desc, path, noindex=False):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;display=swap">
 <script>(function(d){{d.classList.add('js');try{{if(sessionStorage.getItem('yfp:enter')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('entering')}}catch(e){{}}}})(document.documentElement)</script>
-<link rel="stylesheet" href="/css/v3.css?v=53">
-<script src="/js/v3.js?v=53" defer></script>
+<link rel="stylesheet" href="/css/v3.css?v=56">
+<script src="/js/v3.js?v=54" defer></script>
 </head>
 <body>
 <div class="wipe" aria-hidden="true"><img src="/assets/logo-white.png" alt=""></div>
