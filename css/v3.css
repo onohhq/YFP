@@ -19,9 +19,7 @@ em{font-style:italic}
 .js .reveal{opacity:0;transform:translateY(40px)}
 .reveal.is-in{opacity:1;transform:none}
 /* header */
-.hdr{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .5s var(--ease)}
-.hdr.is-scrolled{background:rgba(245,246,249,.985);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
-.hdr--logo.is-scrolled{background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.hdr{position:absolute;top:0;left:0;right:0;z-index:60}
 .hdr__in{display:flex;align-items:center;justify-content:space-between;height:96px}
 .hdr img{height:76px;width:auto}
 .hdr__r{display:flex;align-items:center;gap:12px}
@@ -371,11 +369,10 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 /* home: photo wall. Columns of frames hang from the top of a rounded panel, drop in when it scrolls into view, then drift */
 .wall-sec{padding-top:24px;padding-bottom:24px}
 .wall{position:relative;overflow:hidden}
-.wall__cols{--k:1;--w:clamp(84px,7.6vw,108px);display:flex;justify-content:center;gap:14px;height:calc(var(--w) * 2.85 + 120px * var(--k) + 24px + 16px + 36px);padding:0}
-.wall__col{flex:0 0 var(--w);margin-top:calc(var(--o) * var(--k) - var(--w) * .9)}
+.wall__cols{--k:1;--w:clamp(90px,8.4vw,120px);display:flex;justify-content:center;gap:14px;height:calc(var(--w) * 2.5 + 12px + 120px * var(--k) + 16px + 40px);padding:0}
+.wall__col{flex:0 0 var(--w);margin-top:calc(var(--o) * var(--k))}
 .wall__drift{position:relative;display:flex;flex-direction:column;gap:12px;animation:wallDrift 9s ease-in-out infinite}
-.wall__ghost,.wall__tile{aspect-ratio:4/5;border-radius:16px;overflow:hidden}
-.wall__ghost{background:linear-gradient(180deg,rgba(225,229,238,0) 0%,#eceff5 100%)}
+.wall__tile{aspect-ratio:4/5;border-radius:16px;overflow:hidden}
 .wall__tile{background:#e9ecf2;box-shadow:0 14px 30px -18px rgba(17,22,42,.45);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
 .wall__tile img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
 .wall__drift::after{content:"";position:absolute;left:50%;top:100%;height:220px;border-left:1px dashed rgba(27,36,66,.22);-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
@@ -400,11 +397,11 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
 .js .wall.is-in .wall__text{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.wall__drift{animation:none}.js .wall__col,.js .wall__text{transform:none;transition:opacity .4s}}
 @media (max-width:900px){
-  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 3 * 10px) / 4);gap:10px;height:calc(var(--w) * 2.85 + 110px * var(--k) + 20px + 16px + 30px)}
-  .wall__col.c5,.wall__col.c6,.wall__col.c7,.wall__col.c8,.wall__col.c9{display:none}
+  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 3 * 10px) / 4);gap:10px;height:calc(var(--w) * 2.5 + 10px + 110px * var(--k) + 16px + 32px)}
+  .wall__col.c5,.wall__col.c6,.wall__col.c7,.wall__col.c8{display:none}
   .wall__tile--m{display:block}
   .wall__drift{gap:10px}
-  .wall__ghost,.wall__tile{border-radius:12px}
+  .wall__tile{border-radius:12px}
   .wall__drift::after{height:32px}
   .wall__text h2{font-size:clamp(24px,6.4vw,30px)}
 }
@@ -512,21 +509,31 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
   .pin .sec{padding-top:18px;padding-bottom:18px}
   .pin .sec__h{font-size:30px;margin-bottom:14px}
   .pin .svc,.pin .incl,.pin .types{gap:14px}
-  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 min(86%, calc((100svh - 330px) * .8))}
+  .pin .incl__c,.pin .types__c,.pin .svc__item{flex:0 0 min(86%, calc((100svh - 300px) * .8))}
   .pin .incl__ph,.pin .types__ph,.pin .svc__ph{aspect-ratio:4/5;height:auto;width:100%;margin-bottom:14px;border-radius:24px}
   .pin .incl__ph img,.pin .types__ph img,.pin .svc__ph img{object-position:center 22%}
-  .pin .svc__t,.pin .types__c h3{font-size:22px;line-height:1.1;letter-spacing:.05em}
-  .pin .incl h3{font-size:20px}
+  .pin .svc__t,.pin .types__c h3{font-size:28px;font-weight:600;line-height:1.05;letter-spacing:.04em}
+  .pin .incl h3{font-size:24px;font-weight:600;line-height:1.15}
   .pin .svc__row{gap:12px}
-  .pin .svc__go{width:46px;height:46px;flex:none}
+  .pin .svc__go{width:58px;height:58px;flex:none}
+  .pin .svc__go svg{width:22px;height:22px}
   .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:15px;line-height:1.5}
 }
 @media (max-width:600px) and (max-height:640px){
   .pin .sec{padding-top:8px;padding-bottom:8px}
   .pin .sec__h{font-size:26px;margin-bottom:10px}
   .pin .incl__ph,.pin .types__ph,.pin .svc__ph{margin-bottom:10px}
-  .pin .svc__t,.pin .types__c h3{font-size:19px}
-  .pin .incl h3{font-size:18px}
+  .pin .svc__t,.pin .types__c h3{font-size:24px}
+  .pin .incl h3{font-size:21px}
+  .pin .svc__go{width:50px;height:50px}
   .pin .incl p,.pin .types__c p,.pin .svc__d{font-size:14px;line-height:1.45}
   .pin .types__go{margin-top:8px}
 }
+
+/* mobile menu: social link */
+.menu__social{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.menu__social a{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px 0 14px;border-radius:999px;background:#fff;color:var(--navy);font-size:16px;font-weight:500}
+.menu__social img{width:20px;height:20px}
+
+/* pinned rows: cards slide on the compositor; the section clips them at the screen edges */
+.pin .sec{overflow-x:clip}

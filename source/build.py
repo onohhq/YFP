@@ -2,7 +2,7 @@ import os, json
 OUT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE='https://yourfavephotobooth.com'
 ARR='<span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>'
-NAV=[('/','Home'),('/photobooths/','Photo Experiences'),('/events/','Events'),('/corporate/','Corporate'),('/weddings/','Weddings'),('/faq/','FAQ'),('/contact/','Contact')]
+NAV=[('/','Home'),('/photobooths/','Experience'),('/events/','Events'),('/corporate/','Corporate'),('/weddings/','Weddings'),('/faq/','FAQ'),('/contact/','Contact')]
 def esc(s): return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('"','&quot;')
 def head(title, desc, path, noindex=False):
     url=BASE+path
@@ -38,8 +38,8 @@ def head(title, desc, path, noindex=False):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;display=swap">
 <script>(function(d){{d.classList.add('js');try{{if(sessionStorage.getItem('yfp:enter')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('entering')}}catch(e){{}}}})(document.documentElement)</script>
-<link rel="stylesheet" href="/css/v3.css?v=56">
-<script src="/js/v3.js?v=54" defer></script>
+<link rel="stylesheet" href="/css/v3.css?v=57">
+<script src="/js/v3.js?v=57" defer></script>
 </head>
 <body>
 <div class="wipe" aria-hidden="true"><img src="/assets/logo-white.png" alt=""></div>
@@ -60,6 +60,7 @@ def chrome():
 <img class="menu__bg" src="/assets/photos/hd/home-cover.jpg" alt="">
  <div class="menu__top"><img src="/assets/logo-white.png" alt="Your Fave Photobooth"><button class="menu__x" type="button" aria-label="Close menu">✕</button></div>
  <nav class="menu__links" aria-label="Pages">{links}</nav>
+ <div class="menu__social"><a href="https://www.instagram.com/YOURFAVEPHOTOBOOTH" target="_blank" rel="noopener"><img src="/assets/icon-instagram.svg" alt="" width="20" height="20">Instagram</a></div>
  <div class="menu__foot"><span>Maryland</span><span>Washington, DC</span><span>Virginia</span></div>
 </nav>
 '''
@@ -193,12 +194,12 @@ P['events']=page('Event Photo Experiences: Corporate, Birthdays, Galas | Your Fa
  intro('The lighting of a studio. <em>The ease of a booth.</em>','Most guests have never had a professionally lit portrait taken at a party. We build a styled set inside your venue, in a space of roughly 8 by 8 to 10 by 10 feet, and guide each guest through the shot. That is what a Guest Centered Photo Experience means to us.')+
  pair(('hd/hero2.jpg','A portrait set in a ballroom with a backdrop, lights and gold stanchions'),('hd/portrait.jpg','A group of guests in bright outfits posing together at a Photo Experience'))+
  incl('Every event <em>includes</em>',[
-  ('studio.jpg','A photographer working under studio lights with a guest on set','Studio lighting and backdrop','Flattering light and a backdrop chosen for your event, set up and tested one to two hours before guests arrive.'),
+  ('dslr.jpg','A booth with a ring light and an umbrella light at an evening event','Studio lighting and backdrop','Flattering light and a backdrop chosen for your event, set up and tested one to two hours before guests arrive.'),
   ('wedding-lg.jpg','Four guests posing close together in black and white','Guidance for every guest','Our team helps guests with poses and groups, so nobody has to work out the camera and the line keeps moving.'),
   ('umbrella.jpg','A guest reaching toward the screen of a white booth','Photos in minutes','Prints or digital copies, depending on the experience, ready while the event is still going.'),
   ('corporate.jpg','A guest in a cap holding a drink in front of a branded backdrop','Your look on every photo','Custom print templates, start screens and backdrops, matched to your theme, colors or brand.')])+
  types('Events <em>we cover</em>',[
-  ('/corporate/','corporate-1.jpg','A guest in a rust coat and green suit at a branded backdrop','Corporate events','Holiday parties, conferences and client nights, with your branding on every photo.','Learn more'),
+  ('/corporate/','corporate-guest.webp','A guest in a rust dress posing at a branded backdrop','Corporate events','Holiday parties, conferences and client nights, with your branding on every photo.','Learn more'),
   ('/weddings/','couple-bw.jpg','A couple posing together in black and white','Weddings','A portrait station guests visit between the toasts and the dance floor.','Learn more'),
   ('/corporate/','hd/booth-red-lg.jpg','A red branded booth at a brand activation','Brand activations','Branded booths and instant sharing that put your launch in front of more people.','Learn more'),
   ('/contact/','hd/hero3.jpg','A guest posing with a blue feather fan','Birthdays','Milestone birthdays deserve photos as good as the outfits.','Check your date'),
@@ -217,7 +218,7 @@ P['corporate']=page('Corporate & Brand Activation Photo Experiences in DC | Your
  incl('What your <em>activation gets</em>',[
   ('booth-white.jpg','A white booth set up in a bright room, with a guest beside it','Branded from screen to print','Backdrops, overlays, templates and start screens built around your brand guidelines.'),
   ('umbrella.jpg','A guest reaching toward the screen of a white booth','Instant sharing','Guests send their photos to their own phones in seconds, ready to post.'),
-  ('studio.jpg','A photographer working under studio lights with a guest on set','A team that represents you','Hosts trained to welcome your guests and keep things moving, not just run equipment.'),
+  ('corporate-guest.webp','A guest in a rust dress posing at a branded backdrop','A team that represents you','Hosts trained to welcome your guests and keep things moving, not just run equipment.'),
   ('hd/women.jpg','Two guests laughing together at a Photo Experience','Guests who stay longer','A reason for attendees to stop, interact with your brand and leave with something they want to keep.')])+
  sec('Signature <em>experiences</em>', exp([
   ('/contact/','hd/portrait.jpg','Portrait Booth','Portrait','Booth','A portrait lounge made for your brand.','$1,500','3 hours'),
@@ -233,7 +234,7 @@ P['weddings']=page('Wedding Portrait Booth in Maryland, DC & VA | Your Fave Phot
  intro('Your photographer covers the two of you. <em>We cover your guests.</em>','Your wedding photographer is focused on the couple. We give every guest their own moment in front of the camera, with a Guest Centered Photo Experience that feels like a portrait session, not a queue.')+
  pair(('hd/home-mobile.jpg','A bride and groom smiling together in black and white'),('hd/hero1.jpg','A guest in a flowing gown posing among white flowers in black and white'))+
  incl('What your guests <em>experience</em>',[
-  ('studio.jpg','A photographer working under studio lights with a guest on set','A live portrait photographer','A professional who poses each guest and group, so the photos look like a portrait session.'),
+  ('hd/home-hero-2.jpg','A bride and groom in a black and white portrait','A live portrait photographer','A professional who poses each guest and group, so the photos look like a portrait session.'),
   ('hd/hero2.jpg','A portrait set in a ballroom with a backdrop, lights and gold stanchions','A set that matches your day','A premium backdrop, stanchions and a photo rug, styled to sit beautifully in your venue.'),
   ('hd/hero3.jpg','A guest posing with a blue feather fan','Unlimited prints','Every guest can take home a print from the night, as many as they like.'),
   ('booth-white.jpg','A bride standing beside a white booth in a bright room','A digital gallery','Every portrait in one gallery, ready for you to revisit and share after the wedding.')])+
@@ -298,7 +299,7 @@ P['404']=page('Page Not Found | Your Fave Photobooth','The page you were looking
 home=open(OUT+'/source/index-v3.html').read()
 import re
 P['home']=(home
- .replace('<!--HOME-WHAT-->', split('studio.jpg','A photographer working under studio lights with a guest on set','What happens <em>at the booth</em>',
+ .replace('<!--HOME-WHAT-->', split('hd/hero2.jpg','A portrait set in a ballroom with a backdrop, lights and gold stanchions','What happens <em>at the booth</em>',
    '',
    ['We set up the lighting and backdrop one to two hours before guests arrive.','On the Portrait Booth, a live photographer directs every pose.','Guests get prints or digital copies in minutes, depending on the experience.','You receive a gallery of the night to keep and share.']))
  .replace('<!--HOME-FAQ-->', faqs('Good to <em>know</em>',['What is the difference between the DSLR and Portrait Photo Experiences?','Can the Photo Experience be customized for my event or brand?','How far in advance should I book my Photo Experience?','Are you insured?'])))

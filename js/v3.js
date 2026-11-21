@@ -21,14 +21,6 @@
     addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
   }
 
-  /* Header: solid background once the page scrolls, so content never shows through it */
-  const hdr = $('.hdr');
-  if (hdr) {
-    const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 12);
-    onScroll();
-    addEventListener('scroll', onScroll, { passive: true });
-  }
-
   /* Scroll reveals */
   if (motion && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => entries.forEach(en => {
@@ -120,7 +112,9 @@
     b.setAttribute('aria-expanded', String(open));
     item.querySelector('.acc__a').hidden = !open;
   }));
-  /* Pinned carousels: the section holds still while the cards slide sideways, then the page carries on */
+  /* Pinned carousels: the section holds still while the cards slide sideways, then the page carries on.
+     The row is moved with a GPU transform (no layout work per frame), and sizes come from a stable screen height,
+     so fast scrolling, the iPhone address bar collapsing, and video cards all stay smooth. */
   const pins = [];
   $$('.sec').forEach(sec => {
     const track = sec.querySelector('.svc, .car__track, .incl, .types');
@@ -129,57 +123,63 @@
     wrap.className = 'pin';
     sec.parentNode.insertBefore(wrap, sec);
     wrap.appendChild(sec);
-    track.style.scrollSnapType = 'none';
-    track.style.scrollBehavior = 'auto';
-    pins.push({ wrap, sec, track, max: 0, stick: 0 });
+    pins.push({ wrap, sec, track, max: 0, stick: 0, x: 0, linked: false });
   });
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(probe);
+  let lastW = 0;
   const layout = () => {
+    lastW = innerWidth;
+    const vh = probe.offsetHeight || innerHeight;
+    const hdr = document.querySelector('.hdr');
+    const hh = hdr && getComputedStyle(hdr).position === 'fixed' ? hdr.offsetHeight : 0;
     pins.forEach(p => {
-      p.max = Math.max(0, p.track.scrollWidth - p.track.clientWidth);
-      const sh = p.sec.offsetHeight;
-      if (motion && p.max > 2) {
-        const hh = (document.querySelector('.hdr:not(.hdr--logo)') || {}).offsetHeight || 0;
-        p.stick = hh + Math.max(0, (innerHeight - hh - sh) / 2);
+      const t = p.track;
+      t.style.transform = ''; t.style.overflowX = ''; t.style.willChange = '';
+      p.sec.style.position = ''; p.sec.style.top = ''; p.wrap.style.height = '';
+      p.max = Math.max(0, t.scrollWidth - t.clientWidth);
+      p.linked = motion && p.max > 2;
+      if (p.linked) {
+        const sh = p.sec.offsetHeight;
+        p.stick = hh + Math.max(0, (vh - hh - sh) / 2);
+        t.scrollLeft = 0;
+        t.style.overflowX = 'visible';
+        t.style.touchAction = 'pan-y';
+        t.style.willChange = 'transform';
         p.sec.style.position = 'sticky';
         p.sec.style.top = p.stick + 'px';
         p.wrap.style.height = (sh + p.stick + p.max) + 'px';
-        p.track.style.overflowX = 'hidden';
-        p.track.style.touchAction = 'pan-y';
-        p.linked = true;
+        p.x = -1;
       } else {
-        p.sec.style.position = '';
-        p.sec.style.top = '';
-        p.wrap.style.height = '';
-        p.track.style.overflowX = '';
-        p.track.style.touchAction = '';
-        p.linked = false;
+        t.style.touchAction = '';
       }
     });
     update();
   };
   const update = () => {
     pins.forEach(p => {
-      const track = p.track;
+      if (!p.linked) return;
+      const top = p.wrap.getBoundingClientRect().top;
+      const x = Math.min(p.max, Math.max(0, p.stick - top));
+      if (Math.abs(x - p.x) < 0.25) return;
+      p.x = x;
+      p.track.style.transform = `translate3d(${-x}px,0,0)`;
       const prev = p.sec.querySelector('[data-prev]'), next = p.sec.querySelector('[data-next]');
-      if (motion && p.max > 2) {
-        const r = p.wrap.getBoundingClientRect();
-        const prog = Math.min(1, Math.max(0, (p.stick - r.top) / p.max));
-        track.scrollLeft = prog * p.max;
-      }
-      if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= p.max - 2;
+      if (prev) prev.disabled = x <= 2;
+      if (next) next.disabled = x >= p.max - 2;
     });
   };
   // Arrow buttons move the page to the matching point in the pin, so both controls stay in step
   $$('.car__btn').forEach(btn => btn.addEventListener('click', () => {
-    const p = pins.find(x => x.sec.contains(btn));
-    if (!p || !p.max) return;
+    const p = pins.find(q => q.sec.contains(btn));
+    if (!p || !p.linked) return;
     const first = p.track.firstElementChild;
     const step = first ? first.getBoundingClientRect().width + 22 : 300;
     const dir = btn.hasAttribute('data-next') ? 1 : -1;
-    const target = Math.max(0, Math.min(p.max, p.track.scrollLeft + dir * step));
+    const target = Math.max(0, Math.min(p.max, p.x + dir * step));
     const wrapTop = p.wrap.getBoundingClientRect().top + scrollY;
-    window.scrollTo({ top: wrapTop - p.stick + target, behavior: motion ? 'smooth' : 'auto' });
+    window.scrollTo({ top: wrapTop - p.stick + target, behavior: 'smooth' });
   }));
   /* A sideways swipe (or trackpad scroll) on a pinned row scrolls the page itself. The row only ever moves with
      the page, so it can't be dragged out of step, and scrolling up or down carries on from wherever it was left. */
@@ -198,7 +198,7 @@
       if (axis !== 'x') return;
       e.preventDefault();
       const now = performance.now();
-      v = -dx / Math.max(1, now - t);
+      v = 0.8 * v + 0.2 * (-dx / Math.max(1, now - t));
       t = now; x = nx; y = ny;
       window.scrollBy(0, -dx);
     }, { passive: false });
@@ -206,8 +206,8 @@
       if (!p.linked || axis !== 'x' || !motion) return;
       let speed = v * 16;
       const step = () => {
-        speed *= 0.94;
-        if (Math.abs(speed) < 0.4) { glide = 0; return; }
+        speed *= 0.95;
+        if (Math.abs(speed) < 0.3) { glide = 0; return; }
         window.scrollBy(0, speed);
         glide = requestAnimationFrame(step);
       };
@@ -222,7 +222,8 @@
   let pinRaf = 0;
   const tick = () => { if (pinRaf) return; pinRaf = requestAnimationFrame(() => { pinRaf = 0; update(); }); };
   addEventListener('scroll', tick, { passive: true });
-  addEventListener('resize', layout);
+  // Height-only resizes (the iPhone address bar showing or hiding) do not re-measure, so nothing jumps mid-scroll
+  addEventListener('resize', () => { if (innerWidth !== lastW) layout(); });
   addEventListener('load', layout);
   layout();
 
