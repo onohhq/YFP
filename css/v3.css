@@ -368,44 +368,43 @@ html.entering .wipe{display:block;clip-path:circle(150% at 50% 50%)}
  .ty1 .qz__btn{width:40px;height:40px}
 }
 
-/* home: floating photo band. Tiles pop in when the band scrolls into view, then drift gently */
-.float{position:relative;height:560px;margin:0 auto;max-width:1240px}
-.float__tile{position:absolute;width:150px;aspect-ratio:1}
-.float__in{width:100%;height:100%;border-radius:26px;overflow:hidden;box-shadow:0 18px 40px -24px rgba(17,22,42,.45);animation:floatY 8s ease-in-out infinite}
-.float__in img{width:100%;height:100%;object-fit:cover}
-.float__tile.t1{left:4%;top:6%}
-.float__tile.t2{left:20%;top:58%;width:130px}
-.float__tile.t3{left:36%;top:4%;width:120px}
-.float__tile.t4{right:30%;top:64%;width:140px}
-.float__tile.t5{right:18%;top:8%;width:130px}
-.float__tile.t6{right:3%;top:44%;width:160px}
-.float__tile.t2 .float__in{animation-delay:-2s;animation-duration:9s}
-.float__tile.t3 .float__in{animation-delay:-4s;animation-duration:7s}
-.float__tile.t4 .float__in{animation-delay:-1s;animation-duration:10s}
-.float__tile.t5 .float__in{animation-delay:-3s;animation-duration:8.5s}
-.float__tile.t6 .float__in{animation-delay:-5s;animation-duration:9.5s}
-.float__mid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:min(360px,80%)}
-.float__mid p{margin:0;font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);line-height:1.2;color:var(--ink)}
-.js .float__tile{opacity:0;transform:scale(.55) translateY(24px);transition:opacity .8s var(--ease),transform 1s cubic-bezier(.2,.9,.25,1.15)}
-.js .float.is-in .float__tile{opacity:1;transform:none}
-.float__tile.t2{transition-delay:.12s}.float__tile.t3{transition-delay:.24s}.float__tile.t4{transition-delay:.36s}.float__tile.t5{transition-delay:.48s}.float__tile.t6{transition-delay:.6s}
-.js .float__mid p{opacity:0;transition:opacity 1s var(--ease) .3s}
-.js .float.is-in .float__mid p{opacity:1}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-@media (prefers-reduced-motion:reduce){.float__in{animation:none}.js .float__tile{transform:none;transition:opacity .4s}}
+/* home: photo wall. Columns of frames hang from the top of a rounded panel, drop in when it scrolls into view, then drift */
+.wall-sec{padding-top:24px;padding-bottom:24px}
+.wall{position:relative;border-radius:36px;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f9fafc 100%);box-shadow:0 40px 80px -56px rgba(17,22,42,.35),0 0 0 1px rgba(17,22,42,.04)}
+.wall__cols{--k:1;--w:clamp(96px,10.5vw,132px);display:flex;justify-content:center;gap:14px;height:calc(var(--w) * 2.85 + 70px * var(--k) + 24px + 16px + 36px);padding:0 16px}
+.wall__col{flex:0 0 var(--w);margin-top:calc(var(--o) * var(--k) - var(--w) * .9)}
+.wall__drift{position:relative;display:flex;flex-direction:column;gap:12px;animation:wallDrift 9s ease-in-out infinite}
+.wall__ghost,.wall__tile{aspect-ratio:4/5;border-radius:16px;overflow:hidden}
+.wall__ghost{background:linear-gradient(180deg,rgba(225,229,238,0) 0%,#eceff5 100%)}
+.wall__tile{background:#e9ecf2;box-shadow:0 14px 30px -18px rgba(17,22,42,.45);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.wall__tile img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.wall__drift::after{content:"";position:absolute;left:50%;top:100%;height:220px;border-left:1px dashed rgba(27,36,66,.22);-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
+.wall__col.c2 .wall__drift{animation-duration:11s;animation-delay:-3s}
+.wall__col.c3 .wall__drift{animation-duration:8s;animation-delay:-5s}
+.wall__col.c4 .wall__drift{animation-duration:10s;animation-delay:-1s}
+.wall__col.c5 .wall__drift{animation-duration:12s;animation-delay:-6s}
+.wall__col.c6 .wall__drift{animation-duration:9.5s;animation-delay:-2s}
+.wall__col.c7 .wall__drift{animation-duration:10.5s;animation-delay:-4s}
+@keyframes wallDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(16px)}}
+@media (hover:hover){.wall__tile:hover{transform:translateY(-6px) rotate(-1.5deg) scale(1.04);box-shadow:0 26px 40px -20px rgba(17,22,42,.55)}}
+.wall__text{position:relative;z-index:2;text-align:center;padding:8px 24px clamp(44px,6vw,76px)}
+.wall__text h2{margin:0;font-weight:500;font-size:clamp(28px,3.6vw,50px);line-height:1.12;letter-spacing:-.02em;color:var(--ink)}
+.wall__text h2 span{display:block;color:#9aa0ad;text-wrap:balance}
+.js .wall__col{opacity:0;transform:translateY(-80px);transition:opacity .9s var(--ease),transform 1.2s cubic-bezier(.2,.9,.25,1.08)}
+.js .wall.is-in .wall__col{opacity:1;transform:none}
+.wall__col.c2{transition-delay:.08s}.wall__col.c3{transition-delay:.16s}.wall__col.c4{transition-delay:.24s}.wall__col.c5{transition-delay:.32s}.wall__col.c6{transition-delay:.4s}.wall__col.c7{transition-delay:.48s}
+.js .wall__text{opacity:0;transform:translateY(16px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
+.js .wall.is-in .wall__text{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.wall__drift{animation:none}.js .wall__col,.js .wall__text{transform:none;transition:opacity .4s}}
 @media (max-width:900px){
-  .float{height:460px}
-  .float__tile{width:100px!important}
-  .float__in{border-radius:20px}
-  .float__tile.t1{left:5%;top:3%}
-  .float__tile.t2{left:38%;top:13%;width:96px!important}
-  .float__tile.t3{left:auto;right:5%;top:1%}
-  .float__tile.t4{left:7%;right:auto;top:66%}
-  .float__tile.t5{left:40%;right:auto;top:75%;width:96px!important}
-  .float__tile.t6{right:6%;top:63%;width:104px!important}
-  .float__mid p{font-size:20px}
+  .wall{border-radius:28px}
+  .wall__cols{--k:.6;--w:calc((100vw - 2 * var(--gut) - 32px - 3 * 10px) / 4);gap:10px}
+  .wall__col.c5,.wall__col.c6,.wall__col.c7{display:none}
+  .wall__drift{gap:10px}
+  .wall__ghost,.wall__tile{border-radius:12px}
+  .wall__drift::after{height:32px}
+  .wall__text h2{font-size:clamp(24px,6.4vw,30px)}
 }
-@media (max-width:360px){.float__tile,.float__tile.t2,.float__tile.t5,.float__tile.t6{width:84px!important}}
 
 /* service pages: eyebrow, intro statement, editorial pair, photo cards, event types, quote, short FAQ */
 .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;line-height:1.5}
