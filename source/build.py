@@ -38,8 +38,8 @@ def head(title, desc, path, noindex=False):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;display=swap">
 <script>(function(d){{d.classList.add('js');try{{if(sessionStorage.getItem('yfp:enter')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('entering')}}catch(e){{}}}})(document.documentElement)</script>
-<link rel="stylesheet" href="/css/v3.css?v=44">
-<script src="/js/v3.js?v=44" defer></script>
+<link rel="stylesheet" href="/css/v3.css?v=47">
+<script src="/js/v3.js?v=47" defer></script>
 </head>
 <body>
 <div class="wipe" aria-hidden="true"><img src="/assets/logo-white.png" alt=""></div>
@@ -71,7 +71,7 @@ def footer():
   <div><h4>Pages</h4>{pages}</div>
   <div><h4>Follow</h4><a href="https://www.instagram.com/YOURFAVEPHOTOBOOTH" target="_blank" rel="noopener">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a></div>
  </div>
- <div class="ft__bot"><span>© Your Fave Photobooth</span><span>Maryland · Washington, DC · Virginia</span></div>
+ <div class="ft__bot"><span>© Your Fave Photobooth</span><span>Maryland, Washington DC and Virginia</span></div>
 </footer>
 '''
 def tail(): return '</body>\n</html>\n'
@@ -101,7 +101,7 @@ def chips(name):
     return '<ul class="exp__list">'+''.join(f'<li>{x}</li>' for x in EXP_INCL.get(name,[]))+'</ul>' if name in EXP_INCL else ''
 def split(img, alt, title, body, bullets):
     li=''.join(f'<li>{b}</li>' for b in bullets)
-    return f'<section class="feat"><div class="feat__ph reveal"><img src="/assets/photos/{img}" alt="{esc(alt)}" loading="lazy"></div><div class="reveal"><h2 class="feat__t">{title}</h2><p class="feat__p">{body}</p><ul class="ticks">{li}</ul></div></section>'
+    return f'<section class="feat"><div class="feat__ph reveal"><img src="/assets/photos/{img}" alt="{esc(alt)}" loading="lazy"></div><div class="reveal"><h2 class="feat__t">{title}</h2>{f'<p class="feat__p">{body}</p>' if body else ''}<ul class="ticks">{li}</ul></div></section>'
 def exp(items):
     out=''
     for href,img,alt,name,kind,desc,price,note in items:
@@ -109,7 +109,6 @@ def exp(items):
     <div class="exp__ph"><img src="/assets/photos/{img}" alt="{esc(alt)}"><span class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div>
     <h3 class="exp__t">{name} <em>{kind}</em></h3>
     <p class="exp__p">{desc}</p>
-    {chips(alt)}
     <div class="exp__price"><small class="exp__from">Investment starting at</small>{price}<small>{note}</small></div>
    </a>
 '''
@@ -190,7 +189,7 @@ P['photobooths']=page('Guest Centered Photo Experiences: Portrait & DSLR | Your 
 # Events
 P['events']=page('Event Photo Experiences: Corporate, Birthdays, Galas | Your Fave Photobooth',
  'Portrait and DSLR photo experiences for corporate events, birthdays, anniversaries, galas and private parties in Maryland, Washington DC and Virginia. Studio lighting, a host and photos in minutes.','/events/',
- hero('Photo Experiences <em>For Every Kind Of Event</em>','From milestone birthdays to company galas, we bring a lit portrait set, a friendly host and photos in minutes, so every guest leaves with something worth keeping.','hd/women.jpg','Two guests laughing together at a Photo Experience',[('/contact/','Check your date','pill--navy'),('/photobooths/','See experiences','pill--line')],eyebrow='Event photo experiences · MD, DC &amp; VA')+
+ hero('Photo Experiences <em>For Every Kind Of Event</em>','From milestone birthdays to company galas, we bring a lit portrait set, a friendly host and photos in minutes, so every guest leaves with something worth keeping.','hd/women.jpg','Two guests laughing together at a Photo Experience',[('/contact/','Check your date','pill--navy'),('/photobooths/','See experiences','pill--line')])+
  intro('The lighting of a studio. <em>The ease of a booth.</em>','Most guests have never had a professionally lit portrait taken at a party. We build a styled set inside your venue, in a space of roughly 8 by 8 to 10 by 10 feet, and guide each guest through the shot. That is what a Guest Centered Photo Experience means to us.')+
  pair(('hd/hero2.jpg','A portrait set in a ballroom with a backdrop, lights and gold stanchions'),('hd/portrait.jpg','A group of guests in bright outfits posing together at a Photo Experience'))+
  incl('Every event <em>includes</em>',[
@@ -212,7 +211,7 @@ P['events']=page('Event Photo Experiences: Corporate, Birthdays, Galas | Your Fa
 # Corporate
 P['corporate']=page('Corporate & Brand Activation Photo Experiences in DC | Your Fave Photobooth',
  'Branded photo experiences for corporate events and brand activations in Washington DC, Maryland and Virginia. Custom backdrops, overlays, start screens and instant sharing.','/corporate/',
- hero('Branded Photo Experiences <em>For Corporate Events</em>','A Guest Centered Photo Experience that turns every guest moment into shareable content for your brand, at launches, conferences and client events.','hd/booth-red-lg.jpg','A red branded booth at a brand activation',[('/contact/','Hire us','pill--navy'),('/photobooths/','See experiences','pill--line')],eyebrow='Corporate &amp; brand activations · DMV')+
+ hero('Branded Photo Experiences <em>For Corporate Events</em>','A Guest Centered Photo Experience that turns every guest moment into shareable content for your brand, at launches, conferences and client events.','hd/booth-red-lg.jpg','A red branded booth at a brand activation',[('/contact/','Hire us','pill--navy'),('/photobooths/','See experiences','pill--line')])+
  intro('Your brand, <em>in every guest&rsquo;s camera roll.</em>','Branded backdrops, overlays and start screens put your identity on every photo. Guests share their photos on the spot, so your event keeps reaching people after the doors close.')+
  pair(('booth-red.jpg','A guest sipping a drink in front of a branded backdrop'),('corporate.jpg','A guest in a cap holding a drink in front of a branded backdrop'))+
  incl('What your <em>activation gets</em>',[
@@ -230,7 +229,7 @@ P['corporate']=page('Corporate & Brand Activation Photo Experiences in DC | Your
 # Weddings
 P['weddings']=page('Wedding Portrait Booth in Maryland, DC & VA | Your Fave Photobooth',
  'A wedding portrait booth with a live photographer, premium backdrop and unlimited prints for your guests. Serving weddings in Maryland, Washington DC and Virginia.','/weddings/',
- hero('A Portrait Studio <em>At Your Reception</em>','Between the toasts and the dance floor, your guests step onto a lit set, get posed by our photographer, and leave with prints made that night.','hd/wedding-lg.jpg','Four wedding guests posing together in black and white',[('/contact/','Check date availability','pill--navy'),('/photobooths/','See experiences','pill--line')],eyebrow='Wedding portrait booth · MD, DC &amp; VA')+
+ hero('A Portrait Studio <em>At Your Reception</em>','Between the toasts and the dance floor, your guests step onto a lit set, get posed by our photographer, and leave with prints made that night.','hd/wedding-lg.jpg','Four wedding guests posing together in black and white',[('/contact/','Check date availability','pill--navy'),('/photobooths/','See experiences','pill--line')])+
  intro('Your photographer covers the two of you. <em>We cover your guests.</em>','Your wedding photographer is focused on the couple. We give every guest their own moment in front of the camera, with a Guest Centered Photo Experience that feels like a portrait session, not a queue.')+
  pair(('hd/home-mobile.jpg','A bride and groom smiling together in black and white'),('hd/hero1.jpg','A guest in a flowing gown posing among white flowers in black and white'))+
  incl('What your guests <em>experience</em>',[
@@ -272,7 +271,7 @@ P['thankyou']=page_bare('Thank You, Inquiry Received | Your Fave Photobooth',
  <a class="pill pill--navy" href="/">Back to home</a>
  <div class="ty1__rev"><div class="qz" data-qz><div class="rev__qs"><figure class="rev__q is-on"><p>“The guests truly loved the experience. They are extremely professional and handle their work with care.”</p><figcaption class="rev__who">Omoniola Paye</figcaption></figure><figure class="rev__q"><p>“Truly the highlight of our event! Our guests couldn't stop talking about it!”</p><figcaption class="rev__who">Yinka Meji</figcaption></figure><figure class="rev__q"><p>“The Black and White Portrait Photo Experience would be a hit at our wedding.”</p><figcaption class="rev__who">Famata &amp; Amos</figcaption></figure></div><div class="qz__nav"><button class="qz__btn" type="button" data-prev aria-label="Previous review">&#8592;</button><div class="dots"><i role="button" tabindex="0" aria-label="Review 1" class="on"></i><i role="button" tabindex="0" aria-label="Review 2"></i><i role="button" tabindex="0" aria-label="Review 3"></i></div><button class="qz__btn" type="button" data-next aria-label="Next review">&#8594;</button></div></div></div>
 </div>
-<div class="ty1__foot">© Your Fave Photobooth · Maryland, Washington, DC, Virginia</div></section>''',noindex=True)
+<div class="ty1__foot">© Your Fave Photobooth, serving Maryland, Washington DC and Virginia</div></section>''',noindex=True)
 
 # Digital photos
 P['dp']=page('Get Your Digital Photos | Your Fave Photobooth','Enter your name and email to receive your digital photos from Your Fave Photobooth.','/dp/',
@@ -300,12 +299,8 @@ home=open(OUT+'/source/index-v3.html').read()
 import re
 P['home']=(home
  .replace('<!--HOME-WHAT-->', split('studio.jpg','A photographer working under studio lights with a guest on set','What happens <em>at the booth</em>',
-   'A Photo Experience is a small portrait studio we build inside your venue. It fits in a space of about 8 by 8 to 10 by 10 feet and turns one corner of the room into the spot every guest visits.',
+   '',
    ['We set up the lighting and backdrop one to two hours before guests arrive.','On the Portrait Booth, a live photographer directs every pose.','Guests get prints or digital copies in minutes, depending on the experience.','You receive a gallery of the night to keep and share.']))
- .replace('<!--HOME-STEPS-->', incl('How booking <em>works</em>',[
-   ('hd/hero2.jpg','A portrait set in a ballroom with a backdrop, lights and gold stanchions','A free consultation','Tell us about your event. We talk through the guest count, the space and the look you want, then recommend the right experience.'),
-   ('corporate.jpg','A guest in a cap holding a drink in front of a branded backdrop','Design your look','Choose your backdrop, colors, print template and start screen, or send your brand guidelines and we match them.'),
-   ('umbrella.jpg','A guest reaching toward the screen of a white booth','Enjoy your event','We arrive early, set up and test everything, then run the experience so you can stay with your guests.')],cols=3))
  .replace('<!--HOME-FAQ-->', faqs('Good to <em>know</em>',['What is the difference between the DSLR and Portrait Photo Experiences?','Can the Photo Experience be customized for my event or brand?','How far in advance should I book my Photo Experience?','Are you insured?'])))
 paths={'home':'/index.html','photobooths':'/photobooths/index.html','events':'/events/index.html','corporate':'/corporate/index.html','weddings':'/weddings/index.html','faq':'/faq/index.html','contact':'/contact/index.html','thankyou':'/thankyou/index.html','dp':'/dp/index.html','connect':'/connect/index.html','connect2':'/connect2/index.html','404':'/404.html'}
 for k,rel in paths.items():

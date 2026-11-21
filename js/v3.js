@@ -123,7 +123,7 @@
   /* Pinned carousels: the section holds still while the cards slide sideways, then the page carries on */
   const pins = [];
   $$('.sec').forEach(sec => {
-    const track = sec.querySelector('.svc, .car__track');
+    const track = sec.querySelector('.svc, .car__track, .incl, .types');
     if (!track) return;
     const wrap = document.createElement('div');
     wrap.className = 'pin';
@@ -138,7 +138,8 @@
       p.max = Math.max(0, p.track.scrollWidth - p.track.clientWidth);
       const sh = p.sec.offsetHeight;
       if (motion && p.max > 2) {
-        p.stick = Math.max(0, (innerHeight - sh) / 2);
+        const hh = (document.querySelector('.hdr:not(.hdr--logo)') || {}).offsetHeight || 0;
+        p.stick = hh + Math.max(0, (innerHeight - hh - sh) / 2);
         p.sec.style.position = 'sticky';
         p.sec.style.top = p.stick + 'px';
         p.wrap.style.height = (sh + p.stick + p.max) + 'px';
